@@ -12,7 +12,10 @@ import createPushMessageFunctions from './createPushMessageFunctions';
  * @param {Array|String} names An object whose values are `Rx.Subject`s.
  * You may also pass a single function.
  *
- * @returns {Boolean} makePushFunctions If you want create the
+ * @param {Boolean} makePushFunctions If you want create the
+ * `pushMessageFunctions`, too. Default is true.
+ *
+ * @returns {Object} makePushFunctions If you want create the
  * `pushMessageFunctions`, too. Default is true.
  */
 const createMessageStreams = (names, makePushMessageFunctions = true) => {
