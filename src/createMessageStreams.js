@@ -6,17 +6,17 @@ import createPushMessageFunctions from './createPushMessageFunctions';
  * with added '$' on the end (good practice to identofy streams)
  * and the values are Rx.Subjects.
  *
- * IDEA: When you want to create nested structures, just pass object as an
- * array item.
- *
  * @param {Array|String} names An object whose values are `Rx.Subject`s.
  * You may also pass a single function.
  *
  * @param {Boolean} makePushFunctions If you want create the
  * `pushMessageFunctions`, too. Default is true.
  *
- * @returns {Object} makePushFunctions If you want create the
- * `pushMessageFunctions`, too. Default is true.
+ * @returns {Object} messageStreams Object with keys like {
+ *   arrayItem$: Rx.Subject,
+ *   arrayItem: (val) => arrayItem$.next(val),
+ *   anotherArrayItem: ...
+ * }
  */
 const createMessageStreams = (names, makePushMessageFunctions = true) => {
   const namesArr = [].concat(names);
