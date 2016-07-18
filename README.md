@@ -49,13 +49,13 @@ So you got it?
 
 Actions are messages. In rxr we have streams (aka pipes).
 
-[IMAGE HERE] TODO
+[IMAGE HERE] TODO -
 
 Redux: Action(message) represents data (let thunks leave aside for now)
 
 rxr: You push message to stream.
 
-[IMAGE END] TODO
+[IMAGE END] TODO - 
 
 Think about the _streams_ like arrays and about the functions that modifies the items as `map` function on Arrays. In fact it is very very similar. The difference is that we are not working with finite arrays but very often with events that happens during lifetime of an app - like user clicks, page transitions etc.
 
