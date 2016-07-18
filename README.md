@@ -1,5 +1,7 @@
 # rxr
 
+[![Build Status](https://travis-ci.org/dacz/rxr.svg?branch=master)](https://travis-ci.org/dacz/rxr)
+
 Use [RxJS](https://github.com/ReactiveX/rxjs) with React the way similar to Redux. If you know Redux, rxr introduces very similar concept using into RxJS. It allows to **rewrite Redux app** to use pure RxJS with rxr fast with **most of the main code intact**. This is huge benefit when you want just play with something you already have. To learn, to play... ;)
 
 I'm sure there are different ways how to use RxJS with React. Redux is very popular (and I like it a lot!) and it established some code structure and thinking about the app. Applying RxJS the Redux way has a lot of benefits. We may build on what we know and therefore it's easier to learn RxJS.
@@ -49,13 +51,13 @@ So you got it?
 
 Actions are messages. In rxr we have streams (aka pipes).
 
-[IMAGE HERE] TODO -
+[IMAGE HERE] TODO
 
 Redux: Action(message) represents data (let thunks leave aside for now)
 
 rxr: You push message to stream.
 
-[IMAGE END] TODO - 
+[IMAGE END] TODO
 
 Think about the _streams_ like arrays and about the functions that modifies the items as `map` function on Arrays. In fact it is very very similar. The difference is that we are not working with finite arrays but very often with events that happens during lifetime of an app - like user clicks, page transitions etc.
 
