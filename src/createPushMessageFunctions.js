@@ -7,14 +7,14 @@ const messagesToStream = (subject) => (...args) => subject.next(...args);
  * same keys, but their values are not Subjects but functions, that
  * may be called directly with data you want to push to Subject.
  * So instead of using `userClicks$.next('buttonX')`
- * once you do `const userClicked = nexify(userClicks)` and then
+ * once you do `const userClicked = createPushMessageFunctions(userClicks)` and then
  * just use `userClicked('buttonX')`.
  *
  * For convenience, you can also pass a single Subject as the first argument,
  * and get a function in return.
  *
- * @param {Function|Object} Subject An object whose values are Rx.Subject.
- * You may also pass a single function.
+ * @param {Observable|Object} Subject An object whose values are Rx.Subject.
+ * You may also pass a single Observable.
  *
  * @returns {Function|Object} Object mimicking the original object, but with
  * values changed from Rx.Subject to ordinary functions you can call with

@@ -3,7 +3,7 @@ import createPushMessageFunctions from './createPushMessageFunctions';
 
 /**
  * Turns an array of names, into an object where keys are these names
- * with added '$' on the end (good practice to identofy streams)
+ * with added '$' on the end (good practice to identify streams)
  * and the values are Rx.Subjects.
  *
  * @param {Array|String} names An object whose values are `Rx.Subject`s.
