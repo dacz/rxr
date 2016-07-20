@@ -1,6 +1,6 @@
 {
   "name": "rxr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Maintains state for React app with RxJS the Redux way",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
