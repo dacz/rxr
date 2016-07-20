@@ -6,7 +6,7 @@ _Don’t be fooled by all the fancy talk about actions, reducers, state and stre
 
 In this guide, we’ll walk through similarities between Redux and RxR.
 
-* [Actions and Streams](/docs/basics/ActionsStreams.md)
-* [Reducers](/docs/basics/Reducers.md)
-* [Store or State?](/docs/basics/StoreState.md)
-* [Using With React](/docs/basics/UsingWithReact.md)
+* [Actions and Streams](ActionsStreams.md)
+* [Reducers](Reducers.md)
+* [Store or State?](StoreState.md)
+* [Using With React](UsingWithReact.md)
