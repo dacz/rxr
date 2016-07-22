@@ -13,3 +13,5 @@ RxR is a really tiny layer, mostly helpers. You don't need to use RxR or learn R
 This is work in progress. Two packages ([rxr](https://github.com/dacz/rxr) and [rxr-react](https://github.com/dacz/rxr-react)). First versions. A lot to do. Opinions and help welcome.
 
 Read more in [RxR docs](http://dacz.github.io/rxr) where you can see Redux and appropriate RxR code side by side and you will get into how (simple) RxR works thanks to RxJS.
+
+One small demo (just RxR for now): [rxr-redux-example](https://github.com/dacz/rxr-redux-example).
