@@ -1,6 +1,7 @@
 # RxR - RxJS the Redux way
 
 [![Build Status](https://travis-ci.org/dacz/rxr.svg?branch=master)](https://travis-ci.org/dacz/rxr)
+[![npm](https://img.shields.io/npm/v/rxr.svg?maxAge=2592000)](https://www.npmjs.com/package/rxr)
 
 RxR uses [RxJS](https://github.com/ReactiveX/rxjs) to mimick Redux way of structuring (not only) a React app.
 
