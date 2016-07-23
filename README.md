@@ -16,3 +16,9 @@ This is work in progress. Two packages ([rxr](https://github.com/dacz/rxr) and [
 Read more in [RxR docs](http://dacz.github.io/rxr) where you can see Redux and appropriate RxR code side by side and you will get into how (simple) RxR works thanks to RxJS.
 
 **Here is demo app with docs about differences between Redux and RxR**: [rxr-redux-example](https://github.com/dacz/rxr-redux-example).
+
+## Install
+
+```
+npm install --save rxr rxr-react
+```
