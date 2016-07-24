@@ -45,7 +45,9 @@ We have **no `dispatch`** in RxR. When we need to pass new value to message stre
 userAdded$.next('A');
 ```
 
-Now anything that observes the userAdded$ stream will get this message. With `createPushMessageFunctions` helper we can add syntactic sugar and create function `userAdded()` that will call `.next` itself so from the component you will call` userAdded('A')` the same way as you can from Redux (if you bind the `dispatch`).
+Now anything that observes the userAdded$ stream will get this message. With [`createPushMessageFunctions`](../api/createPushMessageFunctions.md) helper we can add syntactic sugar and create function `userAdded()` that will call `.next` itself so from the component you will call` userAdded('A')` the same way as you can from Redux (if you bind the `dispatch`).
+
+When you will create your message streams with help of [`createMessageStreams`](../api/createMessageStreams.md), you get both in one object by default.
 
 
 ## Differences to mention

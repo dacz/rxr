@@ -21,7 +21,9 @@ You can import then your messageStreams wherever you need them (reducers, connec
 **Parameters**
 
 - `names` **(Array | String)** An object whose values are `Rx.Subject`s. You may also pass a single function.
-- `makePushFunctions` **Boolean** If you want create the `pushMessageFunctions`, too. Default is true.
+- `options` **Object**
+  - `pushMessageFunctions` If you want create the `pushMessageFunctions`, too. Default is true.
+  - `messageStreamsMonitor$` If present (and is Observer), all data sent to this message stream will be available to this observer. Good for monitoring/logging purposes.
 
 **Returns**
 

@@ -12,12 +12,19 @@ const flatten = list => list.reduce(
  * It is the stream of functions that take one argument (state)
  * and generate newState with this function.
  *
- * @param  {Observables} reducers one or many reducers streams (Observables).
+ * @param  {Array of Observables} reducers one or many reducers streams (Observables).
+ *
+ * @param  {Object} options any oteher options passed to combine reducers
+ *
  * @return {Observable} Observable that produces functions how to
  * modify state.
  */
-const combineReducers = (...reducers) => {
-  const flatened = flatten(reducers);
+const combineReducers = (reducers, options = {}) => {
+  if (options) {
+    // do nothing for now, prepared for scoped state
+  }
+  const reducerAsArr = [].concat(reducers);
+  const flatened = flatten(reducerAsArr);
   const reducersArr = [].concat(flatened).filter(item => isObservable(item));
   // console.log('RA: ', reducersArr);
   return Rx.Observable.merge(...reducersArr);

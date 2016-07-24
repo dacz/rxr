@@ -12,7 +12,7 @@ const combinedReducer$ = combineReducer([
 
 **Parameters**
 
-- `reducers` **(Observable | Array)** one reducer or array of reducers streams (Observables).
+- `reducers` **(Array of observables or one observable)** one reducer or array of reducers streams (Observables).
 
 **Returns**
 

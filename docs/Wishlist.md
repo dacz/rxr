@@ -6,7 +6,7 @@ I plan to work on (and you can help, too):
 * _partially done_ - example app (Redux and RxR) to demonstrate that it is really easy to rewrite and demonstrate async
 * make `combineReducersWithStructure` and `createMessageStreamsWithStructure` (and find shorter names for them) to allow messageStreams and it's reducers to maintain their own separate parts of the state (but is has to work with Immutable out of the box)
 * DevTools
-* logger (and generally easy adding the middleware)
+* _patially done_ logger:  now you have loggerStream at least to log into console anything what happens in your app.
 * react router example (and if needed some helpers)
 * recipes (universal app, CRUD, ...)
 * move RxJS to peerDependencies
