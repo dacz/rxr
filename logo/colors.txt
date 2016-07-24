@@ -1,0 +1,4 @@
+Colors:
+
+pink: #f14a91
+violet: #4a2a8f
