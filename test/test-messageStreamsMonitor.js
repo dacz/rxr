@@ -1,5 +1,4 @@
 import test from 'ava';
-import Rx from 'rxjs';
 import isObservable from 'is-observable';
 import messageStreamsMonitor$ from '../src/messageStreamsMonitor';
 

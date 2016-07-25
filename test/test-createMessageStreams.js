@@ -50,7 +50,7 @@ test('do not create message stream functions', t => {
 
 
 test('create message stream with logger functions', t => {
-  t.plan(7);
+  t.plan(10);
 
   const wantVals = [
     { streamName: 'stream1', payload: 'ahoj' },
@@ -61,7 +61,7 @@ test('create message stream with logger functions', t => {
   const wantValsCopy = [].concat(wantVals);
 
   // const monitorStream$ = new Rx.Subject;
-  const messageStreamsMonitor$ = Rx.Observable.of(wantVals);
+  const messageStreamsMonitor$ = Rx.Observable.from(wantVals);
 
   const names = [
     'stream1',
@@ -77,6 +77,6 @@ test('create message stream with logger functions', t => {
   });
 
   return messageStreamsMonitor$.do(val => {
-    t.deepEqual(val, wantValsCopy);
+    t.deepEqual(val, wantValsCopy.shift());
   });
 });

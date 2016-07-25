@@ -10,3 +10,5 @@ In this guide, we’ll walk through similarities between Redux and RxR.
 * [Reducers](Reducers.md)
 * [Store or State?](StoreState.md)
 * [Using With React](UsingWithReact.md)
+
+If you prefer seeing the real code (with side-by-side real), checkout the [RxR Redux Example](https://github.com/dacz/rxr-redux-example).
