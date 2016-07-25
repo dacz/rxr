@@ -1,0 +1,696 @@
+<!DOCTYPE HTML>
+<html lang="en" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Reducers | RxR</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 2.4.3">
+        
+        
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    <link rel="stylesheet" href="../../gitbook/style.css">
+    
+        
+        <link rel="stylesheet" href="../../gitbook/plugins/gitbook-plugin-prism/prism.css">
+        
+    
+    
+
+        
+    
+    
+    <link rel="next" href="../../docs/basics/StoreState.html" />
+    
+    
+    <link rel="prev" href="../../docs/basics/ActionsStreams.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+    <div class="book" data-level="5.2" data-basepath="../.." data-revision="Mon Jul 25 2016 10:17:34 GMT+0200 (CEST)">
+    
+
+<div class="book-summary">
+    <div class="book-search" role="search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <nav role="navigation">
+        <ul class="summary">
+            
+            
+            
+            
+
+            
+
+            
+    
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../../index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                        Introduction
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="1" data-path="../index.html">
+            
+            <span><b>1.</b> Read Me</span>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2" data-path="docs/Introduction.html">
+            
+                
+                    <a href="../../docs/Introduction.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                        Why and Intro
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="3" data-path="docs/Status.html">
+            
+                
+                    <a href="../../docs/Status.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>3.</b>
+                        
+                        Status
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="4" data-path="docs/Credits.html">
+            
+                
+                    <a href="../../docs/Credits.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>4.</b>
+                        
+                        Credits
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5" data-path="docs/basics/index.html">
+            
+                
+                    <a href="../../docs/basics/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.</b>
+                        
+                        Basics
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="5.1" data-path="docs/basics/ActionsStreams.html">
+            
+                
+                    <a href="../../docs/basics/ActionsStreams.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.1.</b>
+                        
+                        Actions and Streams
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter active" data-level="5.2" data-path="docs/basics/Reducers.html">
+            
+                
+                    <a href="../../docs/basics/Reducers.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.2.</b>
+                        
+                        Reducers
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="docs/basics/StoreState.html">
+            
+                
+                    <a href="../../docs/basics/StoreState.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.3.</b>
+                        
+                        Store or State?
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="docs/basics/UsingWithReact.html">
+            
+                
+                    <a href="../../docs/basics/UsingWithReact.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>5.4.</b>
+                        
+                        Using With React
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="6" data-path="docs/more/index.html">
+            
+                
+                    <a href="../../docs/more/index.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.</b>
+                        
+                        More
+                    </a>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="6.1" data-path="docs/more/Async.html">
+            
+                
+                    <a href="../../docs/more/Async.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.1.</b>
+                        
+                        Async
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="docs/more/Middleware.html">
+            
+                
+                    <a href="../../docs/more/Middleware.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.2.</b>
+                        
+                        Middleware
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="docs/more/DevTools.html">
+            
+                
+                    <a href="../../docs/more/DevTools.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.3.</b>
+                        
+                        DevTools/loging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="docs/more/RxRReactRouter.html">
+            
+                
+                    <a href="../../docs/more/RxRReactRouter.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>6.4.</b>
+                        
+                        Using with ReactRouter
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="7" data-path="docs/api/index.html">
+            
+            <span><b>7.</b> API Reference</span>
+            
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="7.1" data-path="docs/api/combineReducers.html">
+            
+                
+                    <a href="../../docs/api/combineReducers.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.1.</b>
+                        
+                        combineReducers
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.2" data-path="docs/api/createMessageStreams.html">
+            
+                
+                    <a href="../../docs/api/createMessageStreams.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.2.</b>
+                        
+                        createMessageStreams
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.3" data-path="docs/api/createPushMessageFunctions.html">
+            
+                
+                    <a href="../../docs/api/createPushMessageFunctions.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.3.</b>
+                        
+                        createPushMessageFunctions
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.4" data-path="docs/api/createState.html">
+            
+                
+                    <a href="../../docs/api/createState.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.4.</b>
+                        
+                        createState
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.5" data-path="docs/api/Provider.html">
+            
+                
+                    <a href="../../docs/api/Provider.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.5.</b>
+                        
+                        Provider (RxR-React)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.6" data-path="docs/api/connectWithState.html">
+            
+                
+                    <a href="../../docs/api/connectWithState.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.6.</b>
+                        
+                        connectWithState (RxR-React)
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.7" data-path="docs/api/createLoggerStream.html">
+            
+                
+                    <a href="../../docs/api/createLoggerStream.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.7.</b>
+                        
+                        createLoggerStream
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.8" data-path="docs/api/startLogging.html">
+            
+                
+                    <a href="../../docs/api/startLogging.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.8.</b>
+                        
+                        startLogging
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="7.9" data-path="docs/api/messageStreamsMonitor.html">
+            
+                
+                    <a href="../../docs/api/messageStreamsMonitor.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>7.9.</b>
+                        
+                        messageStreamsMonitor$
+                    </a>
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="8" data-path="CHANGELOG.html">
+            
+                
+                    <a href="../../CHANGELOG.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>8.</b>
+                        
+                        Change Log
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="9" data-path="docs/Wishlist.html">
+            
+                
+                    <a href="../../docs/Wishlist.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>9.</b>
+                        
+                        Wishlist
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="10" data-path="docs/Resources.html">
+            
+                
+                    <a href="../../docs/Resources.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>10.</b>
+                        
+                        Some Resources
+                    </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="11" data-path="docs/About.html">
+            
+                
+                    <a href="../../docs/About.html">
+                
+                        <i class="fa fa-check"></i>
+                        
+                            <b>11.</b>
+                        
+                        About
+                    </a>
+            
+            
+        </li>
+    
+
+
+            
+            <li class="divider"></li>
+            <li>
+                <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+                    Published with GitBook
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header" role="navigation">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Table of Contents"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Font Settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Share"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">
+                    Share on Twitter
+                </button>
+                <button type="button" data-sharing="google-plus" class="button">
+                    Share on Google
+                </button>
+                <button type="button" data-sharing="facebook" class="button">
+                    Share on Facebook
+                </button>
+                <button type="button" data-sharing="weibo" class="button">
+                    Share on Weibo
+                </button>
+                <button type="button" data-sharing="instapaper" class="button">
+                    Share on Instapaper
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Google"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+    
+
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../" >RxR</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1" role="main">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-">
+                    
+                        <h1 id="reducers">Reducers</h1>
+<p><strong>Redux reducer</strong> transforms actions data (messages) and current state to new state:</p>
+<p><code>action/message + current state =&gt; new state</code></p>
+<p>Some reasonable principles are set here (pure functions, immutable state).</p>
+<p><strong>RxR reducer</strong> (if we can call it reducer) is slightly different. It transforms the message stream to stream of functions that modifies state.</p>
+<p><code>messageStream =&gt; stream of functions: (state) =&gt; new state</code></p>
+<h2 id="whaaaat">Whaaaat?</h2>
+<p>One aspect of functional programming (and RxJS is functional) is that you are much less working with data and much more working with functions. What does it mean?</p>
+<h3 id="redux-reducer">Redux reducer</h3>
+<p>actually takes state and make new state. Therefore you see that it takes 2 arguments (action and state) and create one output (new state). It&apos;s output will be like <code>{ selectedItems: [&apos;Q&apos;, &apos;A&apos;] }</code> (because there already was &apos;Q&apos;).</p>
+<h3 id="rxr-reducer">RxR reducer</h3>
+<p>is simpler - it makes simple transformation of the data. One argument in (messageStream) and one output (state modification functions stream). It&apos;s output will be like <code>(state) =&gt; ({ selectedItems: state.selectedItems.push[&apos;A&apos;] })</code>.</p>
+<p>RxR reducer <strong>doesn&apos;t need the state yet</strong>.</p>
+<p>What is great is the fact that <strong>the function you return from RxR reducer is usually identical to the function you have in Redux reducer</strong>. The logic is exactly the same (except with combinedReducers see below).</p>
+<p>In another words in RxR the reducer is just the transformation on the messageStream.</p>
+<p>Usually it is even more straightforward in RxR. For example you create messageStream of items selected (or deselected) by user. You can even process somehow the data during the flow - like add timestamp or so. You can add logging to any part of the stream to debug this stream. And the last transformation is &quot;reducer like&quot; where you emit not data but function.</p>
+<h2 id="dispatching-or-not">Dispatching (or not?)</h2>
+<p><strong>In Redux</strong> you do not communicate directly with reducer. There is state (later, later) and you dispatch the actions. And by design all actions arrives to all reducers (and usually their switch statements). That&apos;s why they have <code>type</code> property discussed in the Actions section. Kind of signature ... looking or reducer with the same signature (<code>case &apos;user_clicked&apos;:</code>) ... and then love ... - and new state is usually born.</p>
+<p><strong>In RxR</strong> we have distinct streams. You put right message to the right stream. No signatures needed.</p>
+<p>As we saw in <a href="ActionsStreams.html">Actions, Messages and Streams section</a> there is <strong>no dispatch</strong>. We simply put new data into the right messageStream, like:</p>
+<pre><code class="lang-javascript">userAdded$<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token string">&apos;A&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>or even &quot;functionalized&quot; by <code>createPushMessageFunctions</code> we can call <code>userAdded(&apos;A&apos;)</code>.</p>
+<p>There is no state (yet), just functions that tell us how to modify the state.</p>
+<p>The advantage of no state (yet) and no dispatch (at all) in RxR is that we are still in one single stream - we do not need anything else, yet.</p>
+<p>And it is easy to test, too - just test if the returned function does what is should to.</p>
+<p>Isn&apos;t this nice?</p>
+<pre><code class="lang-javascript"><span class="token keyword">const</span> userSelected$ <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rx<span class="token punctuation">.</span>Subject</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// reducer-like part</span>
+userSelected$<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>item <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> itemsSelected<span class="token punctuation">:</span> state<span class="token punctuation">.</span>itemsSelected<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// ... later somewhere in the code</span>
+userSelected$<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token string">&apos;A&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// ... or use function created with createMessageStreams</span>
+<span class="token comment" spellcheck="true">// or with createPushMessageFunctions and just write:</span>
+<span class="token function">userSelected</span><span class="token punctuation">(</span><span class="token string">&apos;A&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>No dispatch, no constants (don&apos;t get me wrong, I really like Redux!)</p>
+<p>Yes, we do not have the whole picture here (as we don&apos;t with Redux code) but this is pretty much of it.</p>
+<h2 id="multiple-reducers">Multiple reducers</h2>
+<p><strong>Redux</strong> combines reducer functions (different action types) within reducer usually with <code>switch</code> statement if you have more than one within reducer.</p>
+<p>Multiple reducers are composed with <code>combineReducers</code>.</p>
+<p><strong>In RxR</strong> you have multiple pipes and if you want to merge them together, you... merge them together with RxJS:</p>
+<pre><code class="lang-javascript"><span class="token keyword">const</span> mergedReducer <span class="token operator">=</span> Rx<span class="token punctuation">.</span>Observable<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>
+  userSelected<span class="token punctuation">,</span>
+  pageTransition<span class="token punctuation">,</span>
+  otherStream<span class="token punctuation">,</span>
+  someEvenOtherStream
+<span class="token punctuation">)</span>
+</code></pre>
+<p>Lets learn RxJS a little bit here. RxJS has great tool to demonstrate it&apos;s functions - RxMarbles. See the <a href="http://rxmarbles.com/#merge" target="_blank">merge one</a>.</p>
+<p><em>Note: <strong>There is one more - bigger - difference with Redux reducer and combineReducers</strong>. In Redux each Reducer maintains it&apos;s own branch of the whole state. When you have reducers <code>redA</code> and <code>redB</code> and you will combine them, the state will have shape <code>{ redA: stateA, redB: stateB}</code>. This is good for encapsulation and composition (each reducer has to know only it&apos;s own part of the state and not the whole structure). On the other side it slightly complicates using library like Immutable (the state becomes regular object of Immutable objects).</em></p>
+<p><em>In RxR for now all reducers are supposed to get the full state. I plan to add something like <code>combineReducersWithStructure</code> and extend <code>createMessageStreams</code>, so you may be able to create non flat messageStreams structure and each messageStream will be able to work with distinct part of the state. But I like Immutable and would like to find solution that works with it by default.</em></p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../../docs/basics/ActionsStreams.html" class="navigation navigation-prev " aria-label="Previous page: Actions and Streams"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../../docs/basics/StoreState.html" class="navigation navigation-next " aria-label="Next page: Store or State?"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../../gitbook/app.js"></script>
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-github/plugin.js"></script>
+    
+
+    
+    <script src="../../gitbook/plugins/gitbook-plugin-anker-enable/anker.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2},"github":{"url":"https://github.com/dacz/rxr"}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>
