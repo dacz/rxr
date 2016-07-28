@@ -73,7 +73,7 @@
     "eslint": "^3.1.1",
     "eslint-config-dacz": "^0.2.0",
     "eslint-plugin-import": "^1.11.0",
-    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.0.0",
     "eslint-plugin-react": "^5.2.2",
     "gitbook-cli": "^2.3.0",
     "rimraf": "^2.5.3",
