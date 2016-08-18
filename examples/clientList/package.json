@@ -1,7 +1,7 @@
 {
-  "name": "rxr-redux-example",
+  "name": "rxr-client-list-example",
   "version": "0.1.0",
-  "description": "RxR and Redux side by side to learn the principles.",
+  "description": "RxR client list example.",
   "main": "dist/index.html",
   "scripts": {
     "clean": "rimraf public && mkdir public",
@@ -84,6 +84,7 @@
     "postcss-url": "^5.1.2",
     "precss": "^1.4.0",
     "rimraf": "^2.5.3",
+    "sinon": "^1.17.5",
     "style-loader": "^0.13.1",
     "stylelint": "^7.0.3",
     "stylelint-config-standard": "^12.0.0",

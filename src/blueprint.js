@@ -1,7 +1,9 @@
 import blueprintInit from './utils/blueprintInit';
 import blueprintSetup from './utils/blueprintSetup';
 
-export default {
-  init:  blueprintInit,
-  setup: blueprintSetup
+const blueprint = (appBlueprint, options) => {
+  const bpInit = blueprintInit(appBlueprint);
+  return blueprintSetup(bpInit, appBlueprint, options);
 };
+
+export default blueprint;

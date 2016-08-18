@@ -8,7 +8,7 @@ import { createScopedState } from '../createScopedState';
 import deepmerge from 'deepmerge';
 
 
-const blueprintSetup = (appInit, bp, functions) => {
+const blueprintSetup = (appInit, bp, { functions }) => {
   // load functions from bp
   const options = {
     appName:       bp.appName || 'app',

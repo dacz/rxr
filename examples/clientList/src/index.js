@@ -2,27 +2,24 @@ import 'babel-polyfill'; // eslint-disable-line
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'rxr-react';
-import { createState, createLoggerStream, startLogging, messageStreamsMonitor$ } from 'rxr';
+import { blueprint, logger } from 'rxr';
 
 import styles from './index.css'; // eslint-disable-line
 
 import App from './components/App';
 
-import reducer$ from './reducers';
+// blueprint of our app
+import appBlueprint from './appBlueprint';
+// functions for our app
+import appFunctions from './funcs';
 
-const initialState = {
-  clients:        { data: [], ts: 0, status: undefined },
-  filter:         '',
-  selectedClient: '',
-};
+// we setup our app
+const app = blueprint(appBlueprint, { functions: appFunctions });
 
-const state$ = createState(reducer$, initialState);
-
-const loggerStream$ = createLoggerStream(state$, messageStreamsMonitor$);
-startLogging(loggerStream$);
+logger(app.monitorS);
 
 render(
-  <Provider state$={ state$ }>
+  <Provider state$={ app.stateS }>
     <App />
   </Provider>, document.getElementById('index')
 );

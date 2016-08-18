@@ -5,12 +5,12 @@ Logging is good for debugging. `createLoggerStream` created observable that give
 Usage - usually in the main file (index.js):
 
 ```javascript
-import { createState, createLoggerStream, startLogging, messageStreamsMonitor$ } from 'rxr';
+import { createState, createLoggerStream, logger, messageStreamsMonitor$ } from 'rxr';
 
 //...
 // we will log all state changes to console
 const loggerStream$ = createLoggerStream(state$, messageStreamsMonitor$);
-startLogging(loggerStream$);
+logger(loggerStream$);
 
 // you can use the loggerStream$ for anything else.
 // it's hot observable and gives you last value

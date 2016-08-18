@@ -41,13 +41,13 @@ const appBlueprint = {
       // // If the function requires additional arguments, they are passed as an array like
       // pipe: [ 'fnName1', 'arg1', 'arg2' ]
 
-      // reducer:       'setFilterReducer', // we may specify the name of reducer function
+      reducer:       'setFilterReducer', // we may specify the name of reducer function
       stateSelector: [ 'filter' ]
     },
 
     selectClient: {
       // you may specify reducer function
-      reducer:       'nameOfReducerFunc',
+      reducer:       true,
       stateSelector: [ 'selectedClient' ]
     },
 
@@ -57,7 +57,10 @@ const appBlueprint = {
     },
 
     fetchClients: {
-      pipe:    'loadClientsAsync',
+      // our function needs to interact with other actions
+      // we reference them as a parameters to the functon call
+      pipe: [ 'loadClientsAsync', 'clientsDataLoading.func', 'receivedClientsData.func' ],
+
       // we may create stream that will not have it's own reducer.
       // in this case the fetch will call clientsDataLoading stream
       // and after the data are received it will call receivedClientsData
