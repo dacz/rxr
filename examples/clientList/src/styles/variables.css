@@ -1,0 +1,27 @@
+:root {
+  --mainFont: Helvetica, Arial;
+  --baseFontSize: 16px;
+  --baseLineHeight: 1.45;
+  --smallerFontSize: 0.75em;
+
+  --pad: 16px;
+
+  --mainColor: #0076bd;
+  --textColor: #333;
+  --dimmedTextColor: #888;
+  --bgrApp: white;
+  --bgrListPane: #eee;
+  --bgrDetail: white;
+  --bgrSearch: #82c9f4;
+  --lineColor: #ddd;
+
+  --avatarSize: 128px;
+  --avatarListSize: 46px;
+
+  --listSearchWidth: 400px;
+}
+
+/* not used now */
+@custom-media --small-screen only screen and (width <= 640px);
+@custom-media --medium-screen only screen and (width > 641px) and (width <= 1024px);
+@custom-media --large-screen only screen and (width > 1024px);

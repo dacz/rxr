@@ -1,0 +1,31 @@
+@import './styles/variables.css';
+@import "./styles/reset.css";
+@import "./styles/initial.css";
+@import "./styles/utils.css";
+
+html,
+body {
+  font-family: var(--mainFont);
+  height: 100%;
+}
+
+html,
+body,
+div,
+span,
+p,
+input,
+textarea {
+  font-family: var(--mainFont);
+  font-size: var(--baseFontSize);
+  line-height: var(--baseLineHeight);
+}
+
+:global #index {
+  height: 100%;
+}
+
+:global #app {
+  position: relative;
+  height: 100%;
+}

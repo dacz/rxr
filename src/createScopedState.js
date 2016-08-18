@@ -29,7 +29,7 @@ const createState = (reducer$, initialState = Rx.Observable.of({})) => {
 
   const initialState$ = isObservable(initialState) ? initialState : Rx.Observable.of(initialState);
 
-  // TODO: make create state universal (if not scoped, it will use the whole state)
+  // TOxDO: make create state universal (if not scoped, it will use the whole state)
   return initialState$
     .merge(reducer$)
     .scan((state, [ scope, reducer ]) =>

@@ -1,0 +1,77 @@
+@import '../styles/variables.css';
+
+.container {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  overflow: scroll;
+  position: relative;
+}
+
+/* This may be used for different styling of empty container */
+.containerEmpty {
+  composes: container;
+}
+
+.empty {
+  position: absolute;
+  padding: var(--pad);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dataContainer {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.avatar {
+  padding: var(--pad);
+  img {
+    width: var(--avatarSize);
+    height: var(--avatarSize);
+    max-width: 100%;
+  }
+}
+
+.data {
+  padding: var(--pad);
+  h1 {
+    margin: calc(var(--pad) / 2) 0;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.tableData {
+  width: 100%;
+  th,
+  td {
+    vertical-align: baseline;
+  }
+  th {
+    font-weight: normal;
+    font-size: var(--smallerFontSize);
+    color: var(--dimmedTextColor);
+    padding-right: var(--pad);
+    text-align: right;
+  }
+}
+
+.separator {
+  hr {
+    margin: calc(var(--pad) / 2) 0;
+    border: 0;
+    height: 1px;
+    background-color: var(--lineColor);
+  }
+}
+
+.link {
+  color: var(--textColor);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

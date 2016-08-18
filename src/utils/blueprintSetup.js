@@ -3,10 +3,8 @@ import {
   setupReducers,
   transformStreams,
 } from './helpers';
-import {
-  combineReducers,
-  createScopedState
-} from '../';
+import { combineReducers } from '../combineReducers';
+import { createScopedState } from '../createScopedState';
 import deepmerge from 'deepmerge';
 
 

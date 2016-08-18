@@ -1,0 +1,11 @@
+node_modules
+*.env
+*.log
+npm-debug.log
+.DS_Store
+dist
+lib
+es
+_book
+archive
+examples
