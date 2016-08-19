@@ -39,14 +39,14 @@ render((
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'rxr-react';
-import { createState, createLoggerStream, startLogging, messageStreamsMonitor$ } from 'rxr';
+import { createState, createLoggerStream, startLogging, messageStreamsMonitorS } from 'rxr';
 
 import styles from './index.css';
 
 import App from './components/App';
 
 // our RxR reducers
-import reducer$ from './reducers';
+import reducerS from './reducers';
 
 // we create initial state here
 const initialState = {
@@ -56,15 +56,15 @@ const initialState = {
 };
 
 // and because in RxR is no need of store, we create state directly
-const state$ = createState(reducer$, initialState);
+const stateS = createState(reducerS, initialState);
 
 // we will log all state changes  and messageStreams events to console
-const loggerStream$ = createLoggerStream(state$, messageStreamsMonitor$);
-startLogging(loggerStream$);
+const loggerStreamS = createLoggerStream(stateS, messageStreamsMonitorS);
+startLogging(loggerStreamS);
 
 // RxR-React provides similar Provider component as React-Redux
 render(
-  <Provider state$={ state$ }>
+  <Provider stateS={ stateS }>
     <App />
   </Provider>, document.getElementById('index')
 );
@@ -87,7 +87,7 @@ Redux creates store. Store is container with state and dispatch (and little bit 
 
 RxR creates state stream. It is `Rx.Observable`. It is like pipe that gives you new value every time the state changes. Redux store has `getState` that gives you current state when you need it.
 
-We are passing (store or state$ via React context to the app. Same. Nice.
+We are passing (store or stateS via React context to the app. Same. Nice.
 
 ---
 

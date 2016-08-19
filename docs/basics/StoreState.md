@@ -23,21 +23,21 @@ Ok, so how do we get the state stream?
 It's simple with RxJS operators.
 
 ```javascript
-const state$ = initialState$
-  .merge(combinedReducer$)
+const stateS = initialStateS
+  .merge(combinedreducerS)
   .scan((state, reducer) => reducer(state))
   .publishReplay(1)
   .refCount();
 
 // with RxR you create it with helper method:
-const state$ = createState(combinedReducer$, initialState$);
+const stateS = createState(combinedreducerS, initialStateS);
 ```
 
 Yes, that's it. Let's decompose it.
 
-`initialState$` gives you exactly what it states - initial state. For example: `{ itemsSelected: [] }`. It is an Observable (stream) that emits just single value and finish. In our case it would be `Rx.Observable.of({ itemsSelected: [] })`. When you use `createState()` function, you can pass a regular object as initial state.
+`initialStateS` gives you exactly what it states - initial state. For example: `{ itemsSelected: [] }`. It is an Observable (stream) that emits just single value and finish. In our case it would be `Rx.Observable.of({ itemsSelected: [] })`. When you use `createState()` function, you can pass a regular object as initial state.
 
-`merge(combinedReducer$)` again does exactly what it states. You remember that reducer emits functions that takes state and creates another state. combinedReducers$ are merged reducers into one stream of these functions.
+`merge(combinedreducerS)` again does exactly what it states. You remember that reducer emits functions that takes state and creates another state. combinedReducersS are merged reducers into one stream of these functions.
 
 Here we merged two streams - stream that gives you recent state and stream that gives you function to modify that state. This new function is emitted every time you push something into any messageStream, do you remember?
 

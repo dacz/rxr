@@ -1,4 +1,4 @@
 import Rx from 'rxjs';
 
-const messageStreamsMonitor$ = new Rx.Subject;
-export default messageStreamsMonitor$;
+const messageStreamsMonitorS = new Rx.Subject;
+export default messageStreamsMonitorS;

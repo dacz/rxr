@@ -6,7 +6,7 @@ const messagesToStream = (subject) => (...args) => subject.next(...args);
  * Turns an object whose values are Rx.Subjects, into an object with the
  * same keys, but their values are not Subjects but functions, that
  * may be called directly with data you want to push to Subject.
- * So instead of using `userClicks$.next('buttonX')`
+ * So instead of using `userClicksS.next('buttonX')`
  * once you do `const userClicked = createPushMessageFunctions(userClicks)` and then
  * just use `userClicked('buttonX')`.
  *

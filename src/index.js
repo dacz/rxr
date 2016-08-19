@@ -6,7 +6,7 @@ import createScopedState from './createScopedState';
 import blueprint from './blueprint';
 import createLoggerStream from './createLoggerStream';
 import logger from './logger';
-import messageStreamsMonitor$ from './messageStreamsMonitor';
+import messageStreamsMonitorS from './messageStreamsMonitor';
 
 export {
   createMessageStreams,
@@ -17,5 +17,5 @@ export {
   blueprint,
   createLoggerStream,
   logger,
-  messageStreamsMonitor$
+  messageStreamsMonitorS
 };

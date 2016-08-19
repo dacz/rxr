@@ -37,7 +37,7 @@ const appBlueprint = {
       // the function receives Observable (initial Rx.Subject)
       // and is supopsed to return Observable.
       // here we will simply debounce user input
-      pipe: 'debounceInput', // like: fname1 = blueprint.stream.setFilter$.debounceTime(100);
+      pipe: 'debounceInput', // like: fname1 = blueprint.stream.setFilterS.debounceTime(100);
       // // If the function requires additional arguments, they are passed as an array like
       // pipe: [ 'fnName1', 'arg1', 'arg2' ]
 

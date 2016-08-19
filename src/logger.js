@@ -1,10 +1,10 @@
 /**
- * Logs loggerStream$ to console
- * @param  {Observable} loggerStream$ created by createLoggerStream
+ * Logs loggerStreamS to console
+ * @param  {Observable} loggerStreamS created by createLoggerStream
  * @return {undefined} not important
  */
-const logger = (loggerStream$) =>
-  loggerStream$.subscribe(log => {
+const logger = (loggerStreamS) =>
+  loggerStreamS.subscribe(log => {
     console.log(`${log.streamName}: `, log.payload); // eslint-disable-line
   });
 

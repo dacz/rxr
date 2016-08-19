@@ -1,5 +1,5 @@
 # logger
 
-Accepts loggerStream$ and logs to the console.
+Accepts loggerStreamS and logs to the console.
 
 [See example](./createLoggerStream.md).

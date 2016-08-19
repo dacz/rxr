@@ -51,7 +51,7 @@ var config = {
   module: {
     loaders: [
       // { test: /\.jsx?$/, include: [path.resolve(__dirname, 'src')], exclude: /node_modules/, loader: "babel" },
-      { test: /\.json$/, loader: "json-loader" },
+      { test: /\.jsonS/, loader: "json-loader" },
       {
         test: /\.js$/,
         include: [
@@ -64,11 +64,11 @@ var config = {
         loader: "babel-loader",
       },
       {
-        test: /\.css$/,
+        test: /\.cssS/,
         loader: ExtractTextPluginConf.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]&minimize!postcss')
       },
       {
-        test: /\.svg$/,
+        test: /\.svgS/,
         loader: "url-loader?limit=10000&mimetype=image/svg+xml"
       },
     ]

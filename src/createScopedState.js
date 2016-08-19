@@ -8,15 +8,15 @@ import objectPath from 'object-path';
  * You can subsrcibe to this stream and get the current state object
  * and new object every time the state changes.
  *
- * @param   {Observable} reducer$ Stream of reducer functions
+ * @param   {Observable} reducerS Stream of reducer functions
  * @param   {Observable|Object} initialState Initial state may be Observable
  *          or object (will be converted to Observable)
  * @returns {Observable} Observable stream of current state
  */
-const createState = (reducer$, initialState = Rx.Observable.of({})) => {
-  if (!isObservable(reducer$)) {
+const createState = (reducerS, initialState = Rx.Observable.of({})) => {
+  if (!isObservable(reducerS)) {
     throw new Error(`createState expects first argument - reducer - to be Observable
-    but it is ${reducer$ === null ? 'null' : typeof reducer$}`
+    but it is ${reducerS === null ? 'null' : typeof reducerS}`
     );
   }
 
@@ -27,12 +27,12 @@ const createState = (reducer$, initialState = Rx.Observable.of({})) => {
     );
   }
 
-  const initialState$ = isObservable(initialState) ? initialState : Rx.Observable.of(initialState);
+  const initialStateS = isObservable(initialState) ? initialState : Rx.Observable.of(initialState);
 
   // TODO: make create state universal (if not scoped, it will use the whole state)
   // TODO: scan function make external so it can be tested
-  return initialState$
-    .merge(reducer$)
+  return initialStateS
+    .merge(reducerS)
     .scan((state, [ scope, reducer ]) =>
       immutable.set(state, scope, reducer(objectPath(state, scope)))
     )

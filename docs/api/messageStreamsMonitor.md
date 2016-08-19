@@ -1,4 +1,4 @@
-# `messageStreamsMonitor$`
+# `messageStreamsMonitorS`
 
 Simple helper that will log everything within messageStreams (if they are created with `createMessageStreams`).
 

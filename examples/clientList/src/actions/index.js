@@ -1,8 +1,8 @@
-import { createMessageStreams, messageStreamsMonitor$ } from 'rxr';
+import { createMessageStreams, messageStreamsMonitorS } from 'rxr';
 
-// you should make some optimization to exclude messageStreamsMonitor$
+// you should make some optimization to exclude messageStreamsMonitorS
 // from production build, like: (if you use webpack definePlugin)
-const monitor$ = process.env.NODE_ENV === 'production' ? undefined : messageStreamsMonitor$;
+const monitorS = process.env.NODE_ENV === 'production' ? undefined : messageStreamsMonitorS;
 
 const actionStreams = createMessageStreams([
   'clientsDataLoading',
@@ -10,6 +10,6 @@ const actionStreams = createMessageStreams([
   'selectClient',
   'receivedClientsData',
   'fetchClients'
-], { messageStreamsMonitor$: monitor$ });
+], { messageStreamsMonitorS: monitorS });
 
 export default actionStreams;

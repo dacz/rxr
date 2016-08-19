@@ -24,7 +24,7 @@
   * [connectWithState (RxR-React)](docs/api/connectWithState.md)
   * [createLoggerStream](docs/api/createLoggerStream.md)
   * [logger](docs/api/logger.md)
-  * [messageStreamsMonitor$](docs/api/messageStreamsMonitor.md)
+  * [messageStreamsMonitorS](docs/api/messageStreamsMonitor.md)
 * [Change Log](/CHANGELOG.md)
 * [Wishlist](docs/Wishlist.md)
 * [Some Resources](docs/Resources.md)

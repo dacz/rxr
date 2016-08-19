@@ -121,16 +121,16 @@ import asyncFetchDataRx from '../utils/asyncFetchDataRx';
 // the main difference: RxR reducer doesn't return new state but the function
 // that may be used to create new state.
 
-const clientsDataLoadingReducer$ = actionStreams.clientsDataLoading$
+const clientsDataLoadingreducerS = actionStreams.clientsDataLoadingS
   .map((ts) => state => ({ ...state, clients: { ...state.clients, status: IS_LOADING, ts } }));
 
-const setFilterReducer$ = actionStreams.setFilter$
+const setFilterreducerS = actionStreams.setFilterS
   .map((val = '') => state => ({ ...state, filter: val }));
 
-const selectClientReducer$ = actionStreams.selectClient$
+const selectClientreducerS = actionStreams.selectClientS
   .map((id = '') => state => ({ ...state, selectedClient: id.toString() }));
 
-const receivedClientsDataReducer$ = actionStreams.receivedClientsData$
+const receivedClientsDatareducerS = actionStreams.receivedClientsDataS
   .map(({ data, error, ts }) => state => {
     if (error) {
       const err = typeof error === 'object' ? error.message : error;
@@ -142,32 +142,32 @@ const receivedClientsDataReducer$ = actionStreams.receivedClientsData$
     return state;
   });
 
-const fetchClientsReducer$ = actionStreams.fetchClients$
+const fetchClientsreducerS = actionStreams.fetchClientsS
   .flatMap((url = CLIENTS_DATA_URL) => {
     const ts = Date.now();
     // notify about the loading
-    actionStreams.clientsDataLoading$.next(ts);
+    actionStreams.clientsDataLoadingS.next(ts);
     return asyncFetchDataRx(url);
   }).map(val => {
     const ts = Date.now();
     const error = (val instanceof Error) ? val.message : undefined;
     const data = error ? undefined : val;
     // update state
-    actionStreams.receivedClientsData$.next({ data, error, ts });
+    actionStreams.receivedClientsDataS.next({ data, error, ts });
     return (state) => state;
   });
 
 
 // we combine the reducers to one stream
-const reducer$ = combineReducers([
-  clientsDataLoadingReducer$,
-  setFilterReducer$,
-  selectClientReducer$,
-  receivedClientsDataReducer$,
-  fetchClientsReducer$
+const reducerS = combineReducers([
+  clientsDataLoadingreducerS,
+  setFilterreducerS,
+  selectClientreducerS,
+  receivedClientsDatareducerS,
+  fetchClientsreducerS
 ]);
 
-export default reducer$;
+export default reducerS;
 ```
 ### What is the output?
 
@@ -197,7 +197,7 @@ In RxR, the similar part is:
 
 ```javascript
 //...
-actionStreams.setFilter$.map((val = '') => state => ({ ...state, filter: val }));
+actionStreams.setFilterS.map((val = '') => state => ({ ...state, filter: val }));
 //...
 ```
 

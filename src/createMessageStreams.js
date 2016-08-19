@@ -13,12 +13,12 @@ import createPushMessageFunctions from './createPushMessageFunctions';
  * @param {Object} options
  *        makePushMessageFunctions: {Boolean} If you want create the
  *        `pushMessageFunctions`, too. Default is true.
- *        messageStreamsMonitor$: {Observer|Subject}: if set, all data in this
+ *        messageStreamsMonitorS: {Observer|Subject}: if set, all data in this
  *        stream will be sent to the monitor with the name of the stream.
  *
  * @returns {Object} messageStreams Object with keys like {
- *   arrayItem$: Rx.Subject,
- *   arrayItem: (val) => arrayItem$.next(val),
+ *   arrayItemS: Rx.Subject,
+ *   arrayItem: (val) => arrayItemS.next(val),
  *   anotherArrayItem: ...
  * }
  */
@@ -36,9 +36,9 @@ const createMessageStreams = (
       if (opts.makePushMessageFunctions) {
         acc[itemName] = createPushMessageFunctions(acc[streamName]);
       }
-      if (opts.messageStreamsMonitor$ && typeof opts.messageStreamsMonitor$.next === 'function') {
+      if (opts.messageStreamsMonitorS && typeof opts.messageStreamsMonitorS.next === 'function') {
         acc[streamName] = acc[streamName].do(val => {
-          opts.messageStreamsMonitor$.next({
+          opts.messageStreamsMonitorS.next({
             streamName,
             payload: val
           });

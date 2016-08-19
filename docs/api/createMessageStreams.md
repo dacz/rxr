@@ -8,10 +8,10 @@ export default messageStreams;
 
 // Structure of messageStreams will be:
 {
-  listItems$: new Rx.Subject,
-  listItems: (val) => listItems$.next(val),
-  userSelected$: new Rx.Subject,
-  userSelected: (val) => userSelected$.next(val)
+  listItemsS: new Rx.Subject,
+  listItems: (val) => listItemsS.next(val),
+  userSelectedS: new Rx.Subject,
+  userSelected: (val) => userSelectedS.next(val)
 }
 ```
 
@@ -23,7 +23,7 @@ You can import then your messageStreams wherever you need them (reducers, connec
 - `names` **(Array | String)** An object whose values are `Rx.Subject`s. You may also pass a single function.
 - `options` **Object**
   - `pushMessageFunctions` If you want create the `pushMessageFunctions`, too. Default is true.
-  - `messageStreamsMonitor$` If present (and is Observer), all data sent to this message stream will be available to this observer. Good for monitoring/logging purposes.
+  - `messageStreamsMonitorS` If present (and is Observer), all data sent to this message stream will be available to this observer. Good for monitoring/logging purposes.
 
 **Returns**
 
@@ -31,8 +31,8 @@ You can import then your messageStreams wherever you need them (reducers, connec
 
 ```javascript
 {
-  arrayItem$: Rx.Subject,
-  arrayItem: (val) => arrayItem$.next(val),
+  arrayItemS: Rx.Subject,
+  arrayItem: (val) => arrayItemS.next(val),
   anotherArrayItem: ...
 }
 ```

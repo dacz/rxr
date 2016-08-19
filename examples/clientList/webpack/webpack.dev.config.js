@@ -39,16 +39,16 @@ devConfig = {
   //   //     loaders: ['react-hot', 'babel-loader'],
   //   //   },
   //   //   // {
-  //   //   //   test: /\.css$/,
+  //   //   //   test: /\.cssS/,
   //   //   //   loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]&&sourceMap!postcss',
   //   //   // },
-  //   //   // { test: /\.css$/, loader: "style!css?module&sourceMap!postcss" },
+  //   //   // { test: /\.cssS/, loader: "style!css?module&sourceMap!postcss" },
   //   // ].concat(config.module.loaders),
   // },
   module: {
     loaders: [
       // { test: /\.jsx?$/, include: [path.resolve(__dirname, 'src')], exclude: /node_modules/, loader: "babel" },
-      { test: /\.json$/, loader: "json-loader" },
+      { test: /\.jsonS/, loader: "json-loader" },
       {
         test: /\.js$/,
         include: [
@@ -61,11 +61,11 @@ devConfig = {
         loader: "babel-loader",
       },
       {
-        test: /\.css$/,
+        test: /\.cssS/,
         loader: config.configuredPlugins.ExtractTextPluginConf.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]&minimize!postcss')
       },
       {
-        test: /\.svg$/,
+        test: /\.svgS/,
         loader: "url-loader?limit=10000&mimetype=image/svg+xml"
       },
     ]

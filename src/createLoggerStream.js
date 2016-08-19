@@ -4,7 +4,7 @@ import isObservable from 'is-observable';
 
 /**
  * creates observable stream (hot) for logging or monitor
- * @param  {Observable} state$ Required. At least you have to monitor state$
+ * @param  {Observable} stateS Required. At least you have to monitor stateS
  *
  * @param  {Observables} ...other add any other observable (not as an array),
  * they will be merged and logged.
@@ -16,14 +16,14 @@ import isObservable from 'is-observable';
  *
  * @return {[Observable]} Stream that may be consumed by monitor or logger
  */
-const createLoggerStream = (state$, ...other) => {
-  if (!state$ && !isObservable(state$)) {
-    throw new Error('createLoggerStream: you need to pass at least state$ stream.');
+const createLoggerStream = (stateS, ...other) => {
+  if (!stateS && !isObservable(stateS)) {
+    throw new Error('createLoggerStream: you need to pass at least stateS stream.');
   }
   const otherToLog = other.filter(item => isObservable(item));
 
-  const stateToLog$ = state$.map(state => ({ streamName: 'state', payload: state }));
-  const toLog = [ stateToLog$, ...otherToLog ];
+  const stateToLogS = stateS.map(state => ({ streamName: 'state', payload: state }));
+  const toLog = [ stateToLogS, ...otherToLog ];
 
   return Rx.Observable.merge(...toLog)
     .distinctUntilChanged((a, b) => deepEqual(a, b))

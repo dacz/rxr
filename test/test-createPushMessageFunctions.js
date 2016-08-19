@@ -3,15 +3,15 @@ import Rx from 'rxjs';
 import createPushMessageFunctions from '../src/createPushMessageFunctions';
 
 test('wraps one subject with next', t => {
-  const action$ = new Rx.Subject;
-  const action = createPushMessageFunctions(action$);
+  const actionS = new Rx.Subject;
+  const action = createPushMessageFunctions(actionS);
   const valWanted = [
     1,
     'some',
     { some: 'object' },
   ];
 
-  action$.subscribe(val => {
+  actionS.subscribe(val => {
     t.deepEqual(val, valWanted.shift());
   });
 

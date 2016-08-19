@@ -1,6 +1,6 @@
 # Provider.md
 
-Provides state$ stream to your app within React context.
+Provides stateS stream to your app within React context.
 
 Very similar to Redux provider.
 
@@ -16,18 +16,18 @@ import { Provider } from 'rxr-react';
 const messageStreams = createMessageStreams('userSelected');
 //                     ^^^ this basically creates:
 // messageStreams = {
-//   userSelected$: new Rx.Subject,
-//   userSelected: (val) => userSelected$.next(val)
+//   userSelectedS: new Rx.Subject,
+//   userSelected: (val) => userSelectedS.next(val)
 // }
 
-const userReducer$ = messageStreams.userSelected$
+const userreducerS = messageStreams.userSelectedS
   .map(item => (state) => ({ itemsSelected: state.itemsSelected.push(item) }));
 
 const initialState = { itemsSelected: [] };
-const state$ = createState(userReducer$, initialState);
+const stateS = createState(userreducerS, initialState);
 
 render(
-  <Provider state$={ state$ }>
+  <Provider stateS={ stateS }>
     <App />
   </Provider>, document.getElementById('index')
 );

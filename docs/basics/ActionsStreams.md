@@ -34,18 +34,18 @@ In RxJS are not only these double sided streams like this but in this example ar
 So let's model our Redux counterpart of actions or actionsCreators as
 
 ```javascript
-const userAdded$ = new Rx.Subject;
+const userAddedS = new Rx.Subject;
 ```
 
-_**Note:** We will use the convention that Rx streams when assigned to variables will end with '$'. They don't have to but if you see something like `variable$`, you can guess that it is not usual object but Observable stream._
+_**Note:** We will use the convention that Rx streams when assigned to variables will end with '$'. They don't have to but if you see something like `variableS`, you can guess that it is not usual object but Observable stream._
 
 We have **no `dispatch`** in RxR. When we need to pass new value to message stream (user clicked or so), we simply call:
 
 ```javascript
-userAdded$.next('A');
+userAddedS.next('A');
 ```
 
-Now anything that observes the userAdded$ stream will get this message. With [`createPushMessageFunctions`](../api/createPushMessageFunctions.md) helper we can add syntactic sugar and create function `userAdded()` that will call `.next` itself so from the component you will call` userAdded('A')` the same way as you can from Redux (if you bind the `dispatch`).
+Now anything that observes the userAddedS stream will get this message. With [`createPushMessageFunctions`](../api/createPushMessageFunctions.md) helper we can add syntactic sugar and create function `userAdded()` that will call `.next` itself so from the component you will call` userAdded('A')` the same way as you can from Redux (if you bind the `dispatch`).
 
 When you will create your message streams with help of [`createMessageStreams`](../api/createMessageStreams.md), you get both in one object by default.
 
@@ -54,6 +54,6 @@ When you will create your message streams with help of [`createMessageStreams`](
 
 Redux action contains data. Redux action doesn't care where it will be consumed (reducer comes later...) and how it will get there (dispatch). That's why the action contains `type` property. It's kind of 'address' or 'signature'.
 
-RxR stream on the other side defines the path of the data. Once the data are passed to `userAdded$` stream, we know where we find them (actually when we observe this stream).
+RxR stream on the other side defines the path of the data. Once the data are passed to `userAddedS` stream, we know where we find them (actually when we observe this stream).
 
 RxR stream therefore doesn't need the `type` to address the data (and usually the accompanying constants). You push your message into just one stream - the right one. Like _"stream of user's click on ButtonX"_ or _"user scrolls"_ or _"data arrived from fetch"_...

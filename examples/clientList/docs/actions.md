@@ -99,11 +99,11 @@ Where is the async logic and actions formats? And what it creates?
 
 What it does is [described in detail here](https://dacz.github.io/rxr/docs/basics/ActionsStreams.html).
 
-Basically - `actionStreams` is an object that contains pairs of keys like `clientsDataLoading$` and `clientsDataLoading` ... for all items from the array passed into `createMessageStreams`.
+Basically - `actionStreams` is an object that contains pairs of keys like `clientsDataLoadingS` and `clientsDataLoading` ... for all items from the array passed into `createMessageStreams`.
 
-The `clientsDataLoading$` is `Rx.Subject` that means that it is observer (you can put/pipe something into it) and at the same time is it observable - anything that will subscribe to it's values will get this "something" piped into it.
+The `clientsDataLoadingS` is `Rx.Subject` that means that it is observer (you can put/pipe something into it) and at the same time is it observable - anything that will subscribe to it's values will get this "something" piped into it.
 
-Because the way how to put new value into Subject is to call `clientsDataLoading$.next(value)`, the second key created by `createMessageStreams` for this item is plain `clientsDataLoading`. This is just syntactic sugar - when you call `clientsDataLoading(value)`, it is the same as calling the `clientsDataLoading$.next(value)`.
+Because the way how to put new value into Subject is to call `clientsDataLoadingS.next(value)`, the second key created by `createMessageStreams` for this item is plain `clientsDataLoading`. This is just syntactic sugar - when you call `clientsDataLoading(value)`, it is the same as calling the `clientsDataLoadingS.next(value)`.
 
 So in the `actionStreams` is 10 keys ... 5 pairs for each item of the array.
 

@@ -60,14 +60,14 @@ test('create message stream with logger functions', t => {
   ];
   const wantValsCopy = [].concat(wantVals);
 
-  // const monitorStream$ = new Rx.Subject;
-  const messageStreamsMonitor$ = Rx.Observable.from(wantVals);
+  // const monitorStreamS = new Rx.Subject;
+  const messageStreamsMonitorS = Rx.Observable.from(wantVals);
 
   const names = [
     'stream1',
     'stream2',
   ];
-  const messageStreams = createMessageStreams(names, { messageStreamsMonitor$ });
+  const messageStreams = createMessageStreams(names, { messageStreamsMonitorS });
 
   names.forEach(name => {
     const nameStreamKey = `${name}$`;
@@ -76,7 +76,7 @@ test('create message stream with logger functions', t => {
     t.true(typeof messageStreams[name] === 'function');
   });
 
-  return messageStreamsMonitor$.do(val => {
+  return messageStreamsMonitorS.do(val => {
     t.deepEqual(val, wantValsCopy.shift());
   });
 });

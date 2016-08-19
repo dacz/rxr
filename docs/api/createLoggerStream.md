@@ -5,23 +5,23 @@ Logging is good for debugging. `createLoggerStream` created observable that give
 Usage - usually in the main file (index.js):
 
 ```javascript
-import { createState, createLoggerStream, logger, messageStreamsMonitor$ } from 'rxr';
+import { createState, createLoggerStream, logger, messageStreamsMonitorS } from 'rxr';
 
 //...
 // we will log all state changes to console
-const loggerStream$ = createLoggerStream(state$, messageStreamsMonitor$);
-logger(loggerStream$);
+const loggerStreamS = createLoggerStream(stateS, messageStreamsMonitorS);
+logger(loggerStreamS);
 
-// you can use the loggerStream$ for anything else.
+// you can use the loggerStreamS for anything else.
 // it's hot observable and gives you last value
 //...
 ```
 
-The `messageStreamsMonitor$` is simple helper (actually plain Rx.Subject). It should be passed when you create messageStreams, too, like:
+The `messageStreamsMonitorS` is simple helper (actually plain Rx.Subject). It should be passed when you create messageStreams, too, like:
 
 ```javascript
 // messageStreams/index.js
-import { createMessageStreams, messageStreamsMonitor$ } from 'rxr';
+import { createMessageStreams, messageStreamsMonitorS } from 'rxr';
 
 const actionStreams = createMessageStreams([
   'clientsDataLoading',
@@ -29,7 +29,7 @@ const actionStreams = createMessageStreams([
   'selectClient',
   'receivedClientsData',
   'fetchClients'
-], { messageStreamsMonitor$ });
+], { messageStreamsMonitorS });
 
 export default actionStreams;
 ```
@@ -37,7 +37,7 @@ export default actionStreams;
 
 **Parameters**
 
-- list (not array!) of observable streams you want to monitor. First one **has to be** the state$ stream.
+- list (not array!) of observable streams you want to monitor. First one **has to be** the stateS stream.
 
 **Returns**
 

@@ -2,13 +2,13 @@ import 'babel-polyfill'; // eslint-disable-line
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'rxr-react';
-import { createState, createLoggerStream, startLogging, messageStreamsMonitor$ } from 'rxr';
+import { createState, createLoggerStream, startLogging, messageStreamsMonitorS } from 'rxr';
 
 import styles from './index.css'; // eslint-disable-line
 
 import App from './components/App';
 
-import reducer$ from './reducers';
+import reducerS from './reducers';
 
 const initialState = {
   clients:        { data: [], ts: 0, status: undefined },
@@ -16,13 +16,13 @@ const initialState = {
   selectedClient: '',
 };
 
-const state$ = createState(reducer$, initialState);
+const stateS = createState(reducerS, initialState);
 
-const loggerStream$ = createLoggerStream(state$, messageStreamsMonitor$);
-startLogging(loggerStream$);
+const loggerStreamS = createLoggerStream(stateS, messageStreamsMonitorS);
+startLogging(loggerStreamS);
 
 render(
-  <Provider state$={ state$ }>
+  <Provider stateS={ stateS }>
     <App />
   </Provider>, document.getElementById('index')
 );

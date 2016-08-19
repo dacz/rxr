@@ -4,33 +4,33 @@ import combineReducers from '../src/combineReducers';
 
 
 test('combine reducers with one value', t => {
-  const reducer1$ = new Rx.Subject;
-  const combinedReducer$ = combineReducers(reducer1$);
+  const reducer1S = new Rx.Subject;
+  const combinedreducerS = combineReducers(reducer1S);
   // shows us that it is "active"
-  t.false(combinedReducer$._isScalar);
+  t.false(combinedreducerS._isScalar);
   const valWanted = [ 1, 2, 3 ];
-  combinedReducer$.subscribe(val => {
+  combinedreducerS.subscribe(val => {
     t.deepEqual(val, valWanted.shift());
   });
 
-  reducer1$.next(1);
-  reducer1$.next(2);
-  reducer1$.next(3);
+  reducer1S.next(1);
+  reducer1S.next(2);
+  reducer1S.next(3);
 });
 
 test('combine multiple reducers as an array', t => {
-  const reducer1$ = new Rx.Subject;
-  const reducer2$ = new Rx.Subject;
-  const combinedReducer$ = combineReducers([ reducer1$, reducer2$ ]);
-  t.false(combinedReducer$._isScalar);
+  const reducer1S = new Rx.Subject;
+  const reducer2S = new Rx.Subject;
+  const combinedreducerS = combineReducers([ reducer1S, reducer2S ]);
+  t.false(combinedreducerS._isScalar);
   const valWanted = [ 1, 'a', 2, 3, 'b' ];
-  combinedReducer$.subscribe(val => {
+  combinedreducerS.subscribe(val => {
     t.is(val, valWanted.shift());
   });
 
-  reducer1$.next(1);
-  reducer2$.next('a');
-  reducer1$.next(2);
-  reducer1$.next(3);
-  reducer2$.next('b');
+  reducer1S.next(1);
+  reducer2S.next('a');
+  reducer1S.next(2);
+  reducer1S.next(3);
+  reducer2S.next('b');
 });

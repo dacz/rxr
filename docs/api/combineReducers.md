@@ -4,9 +4,9 @@ combine multiple reducers (observable streams of functions)
 into one stream that can be pushed to `createState`.
 
 ```javascript
-const combinedReducer$ = combineReducer([
-  selectedItems$,
-  listItems$
+const combinedreducerS = combineReducer([
+  selectedItemsS,
+  listItemsS
 ])
 ```
 

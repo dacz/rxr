@@ -46,11 +46,11 @@ This helper returns again `Observable.fromPromise` and that's why we have to use
 
 ```javascript
 // ...
-actionStreams.fetchClients$
+actionStreams.fetchClientsS
   .flatMap((url = CLIENTS_DATA_URL) => {
     const ts = Date.now();
     // notify about the loading
-    actionStreams.clientsDataLoading$.next(ts);
+    actionStreams.clientsDataLoadingS.next(ts);
     return asyncFetchDataRx(url);
 // ...
 ```
@@ -60,7 +60,7 @@ Rx offers us more benefits, like possibility to retry fetch and more. So the `as
 ```javascript
 const asyncFetchDataRx = (url = CLIENTS_DATA_URL) => (
   Rx.Observable.fromPromise(fetch(url))
-  .retryWhen(err$ => err$.delay(1000).take(10))
+  .retryWhen(errS => errS.delay(1000).take(10))
   .flatMap(response => Rx.Observable.fromPromise(response.json()))
   .catch(err => Rx.Observable.of(new Error(err)))
 );

@@ -39,7 +39,7 @@ Usually it is even more straightforward in RxR. For example you create messageSt
 As we saw in [Actions, Messages and Streams section](./ActionsStreams.md) there is **no dispatch**. We simply put new data into the right messageStream, like:
 
 ```javascript
-userAdded$.next('A');
+userAddedS.next('A');
 ```
 
 or even "functionalized" by `createPushMessageFunctions` we can call `userAdded('A')`.
@@ -53,13 +53,13 @@ And it is easy to test, too - just test if the returned function does what is sh
 Isn't this nice?
 
 ```javascript
-const userSelected$ = new Rx.Subject;
+const userSelectedS = new Rx.Subject;
 
 // reducer-like part
-userSelected$.map(item => (state) => ({ itemsSelected: state.itemsSelected.push(item) }));
+userSelectedS.map(item => (state) => ({ itemsSelected: state.itemsSelected.push(item) }));
 
 // ... later somewhere in the code
-userSelected$.next('A');
+userSelectedS.next('A');
 
 // ... or use function created with createMessageStreams
 // or with createPushMessageFunctions and just write:

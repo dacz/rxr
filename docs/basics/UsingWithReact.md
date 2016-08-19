@@ -9,7 +9,7 @@ This is how HoC component looks like with RxR-React:
 ```javascript
 import { connectWithState } from 'rxr-react';
 import MyContainer from './MyContainer';
-// let suppose that our userSelected$ stream is already bound with .next()
+// let suppose that our userSelectedS stream is already bound with .next()
 // and inside the object myMessageStreams
 import messageStreams from './messageStreams';
 
@@ -42,13 +42,13 @@ const connectWithState = (selector = (state) => state) => (WrappedComponent) =>
 
       // we need this for using context
       static contextTypes = {
-        state$: PropTypes.object, // observable is an object
+        stateS: PropTypes.object, // observable is an object
       };
 
-      // we pick up the state$ from context here
+      // we pick up the stateS from context here
       constructor(props, context) {
         super(props, context);
-        this.state$ = context.state$;
+        this.stateS = context.stateS;
       }
 
       // we get the state stream (1)
@@ -60,7 +60,7 @@ const connectWithState = (selector = (state) => state) => (WrappedComponent) =>
       // like shortcut of (data) => setState(data))
       // and subscribe (4) to actually get all of this.
       componentWillMount() {
-        this.subscription = this.state$      //1
+        this.subscription = this.stateS      //1
         .map(selector)                       //2
         .distinctUntilChanged((a, b) => deepEqual(a, b)) //3
         .subscribe(::this.setState);         //4
@@ -99,18 +99,18 @@ import { Provider } from 'rxr-react';
 const messageStreams = createMessageStreams('userSelected');
 //                     ^^^ this basically creates:
 // messageStreams = {
-//   userSelected$: new Rx.Subject,
-//   userSelected: (val) => userSelected$.next(val)
+//   userSelectedS: new Rx.Subject,
+//   userSelected: (val) => userSelectedS.next(val)
 // }
 
-const userReducer$ = messageStreams.userSelected$
+const userreducerS = messageStreams.userSelectedS
   .map(item => (state) => ({ itemsSelected: state.itemsSelected.push(item) }));
 
 const initialState = { itemsSelected: [] };
-const state$ = createState(userReducer$, initialState);
+const stateS = createState(userreducerS, initialState);
 
 render(
-  <Provider state$={ state$ }>
+  <Provider stateS={ stateS }>
     <App />
   </Provider>, document.getElementById('index')
 );

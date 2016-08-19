@@ -11,12 +11,12 @@ test('create with just state', t => {
     { someOther: 'other state' }
   ];
   const statesCopy = [].concat(states);
-  const state$ = Rx.Observable.from(states);
-  const loggerStream$ = createLoggerStream(state$);
+  const stateS = Rx.Observable.from(states);
+  const loggerStreamS = createLoggerStream(stateS);
 
-  t.true(isObservable(loggerStream$));
+  t.true(isObservable(loggerStreamS));
 
-  return loggerStream$.subscribe(val => {
+  return loggerStreamS.subscribe(val => {
     t.deepEqual(val, { streamName: 'state', payload: statesCopy.shift() });
   });
 });
@@ -36,13 +36,13 @@ test('create with state and messageStream monitor', t => {
     .map(item => ({ streamName: 'state', payload: item }))
     .concat(streamEvents);
 
-  const state$ = Rx.Observable.from(states);
-  const streamEvents$ = Rx.Observable.from(streamEvents);
-  const loggerStream$ = createLoggerStream(state$, streamEvents$);
+  const stateS = Rx.Observable.from(states);
+  const streamEventsS = Rx.Observable.from(streamEvents);
+  const loggerStreamS = createLoggerStream(stateS, streamEventsS);
 
-  t.true(isObservable(loggerStream$));
+  t.true(isObservable(loggerStreamS));
 
-  return loggerStream$.subscribe(val => {
+  return loggerStreamS.subscribe(val => {
     t.deepEqual(val, wantMonitor.shift());
   });
 });

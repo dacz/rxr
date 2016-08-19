@@ -9,7 +9,7 @@ This is how HoC (higher order component) looks like with RxR-React:
 ```javascript
 import { connectWithState } from 'rxr-react';
 import MyContainer from './MyContainer';
-// let suppose that our userSelected$ stream is already bound with .next()
+// let suppose that our userSelectedS stream is already bound with .next()
 // and inside the object myMessageStreams
 import messageStreams from './messageStreams';
 
