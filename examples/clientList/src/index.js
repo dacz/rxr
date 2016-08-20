@@ -19,7 +19,7 @@ const app = blueprint(appBlueprint, { functions: appFunctions });
 logger(app.monitorS);
 
 render(
-  <Provider stateS={ app.stateS }>
+  <Provider app={ app }>
     <App />
   </Provider>, document.getElementById('index')
 );

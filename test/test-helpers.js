@@ -3,6 +3,9 @@ import isObservable from 'is-observable';
 import test from 'ava';
 import * as helpers from '../src/utils/helpers';
 import { subjectHelper, subscribeExpect, pushToSubject } from './helpers';
+import functionsExample from './helper-functionsExample';
+import appBlueprintExample from './helper-appBlueprintExample';
+import appBlueprintExampleOutput from './helper-appBlueprintExampleOutput';
 
 
 test('initAction', t => {
@@ -57,6 +60,7 @@ test('wrapByMonitor - no monitor', t => {
 });
 
 
+
 test('makePipedStream', t => {
   t.plan(3);
   const ftrans = (i) => [ i, i ];
@@ -65,6 +69,19 @@ test('makePipedStream', t => {
   const pipedS = helpers.makePipedStream(obsS, fn);
   const inVal = [ 1, 'a', { some: 'value' } ];
   const want = inVal.map(ftrans);
+  subscribeExpect(t, pipedS, want);
+  pushToSubject(obsS, inVal);
+});
+
+test('makePipedStream with args', t => {
+  t.plan(3);
+  const multiply = 3;
+  const ftrans = (i, arg) => i * arg;
+  const fn = (obs, arg) => obs.map(i => ftrans(i, arg));
+  const obsS = new Rx.Subject;
+  const pipedS = helpers.makePipedStream(obsS, fn, [ multiply ]);
+  const inVal = [ 1, 3, 42 ];
+  const want = inVal.map(i => ftrans(i, multiply));
   subscribeExpect(t, pipedS, want);
   pushToSubject(obsS, inVal);
 });
@@ -78,17 +95,30 @@ test('makePipedStream - not observable out', t => {
 
 
 
-test('getFunc', t => {
+test('getFunc - string', t => {
   const fname = 'someFunc';
   const functions = {
     someFunc:  () => {},
     otherFunc: () => {},
   };
   const func = helpers.getFunc(fname, functions);
-  t.is(func, functions.someFunc);
+  const want = [ functions.someFunc, []];
+  t.deepEqual(func, want);
 });
 
-test('getFunc - not a string', t => {
+test('getFunc - array', t => {
+  const fname = [ 'someFunc', 'arg1', 'arg2' ];
+  const args = fname.slice(1);
+  const functions = {
+    someFunc:  () => {},
+    otherFunc: () => {},
+  };
+  const func = helpers.getFunc(fname, functions);
+  const want = [ functions.someFunc, args ];
+  t.deepEqual(func, want);
+});
+
+test('getFunc - not a string or array', t => {
   t.plan(1);
   const functions = {
     someFunc:  () => {},
@@ -125,6 +155,30 @@ test('setupAction', t => {
   const streamName = 'streamA';
   const subj = new Rx.Subject;
   const fname = 'someFunc';
+  const ftrans = (i) => i * 2;
+  const fn = (obs) => obs.map(ftrans);
+  const functions = {
+    someFunc:  fn,
+    otherFunc: () => {},
+  };
+  const monitorS = new Rx.Subject;
+  const preReducerS = helpers.setupAction(appName, streamName, subj, fname, functions, monitorS);
+
+  const inVal = [ 1, 4, 21 ];
+  const wantVals = inVal.map(ftrans);
+  const wantMonitor = wantVals.map(i => [ `${appName}:${streamName}`, i ]);
+  t.plan(6);
+  subscribeExpect(t, monitorS, wantMonitor);
+  subscribeExpect(t, preReducerS, wantVals);
+  pushToSubject(subj, inVal);
+});
+
+
+test('setupAction - as an array', t => {
+  const appName = 'appName1';
+  const streamName = 'streamA';
+  const subj = new Rx.Subject;
+  const fname = [ 'someFunc', 'arg1', 'arg2' ];
   const ftrans = (i) => i * 2;
   const fn = (obs) => obs.map(ftrans);
   const functions = {
@@ -225,6 +279,28 @@ test('setupAction - wrong function', t => {
 
 
 
+test('setupActions', t => {
+  const actionsBp = {
+    a1: {},
+    a2: {}
+  };
+  const actions = {
+    a1: { streamS: new Rx.Subject },
+    a2: { streamS: new Rx.Subject }
+  };
+  const options = {
+    appName:       'app',
+    stateSelector: undefined,
+    monitorS:      undefined,
+  };
+  const preReducerS = helpers.setupActions(actions, actionsBp, options);
+  Object.keys(actionsBp).forEach(k => {
+    t.true(isObservable(preReducerS[k]));
+  });
+});
+
+
+
 test('flattenArray', t => {
   const valIn = [ 'a', [ 'b', 'c' ]];
   const want = [ 'a', 'b', 'c' ];
@@ -294,7 +370,7 @@ test('scopeReducer - no scope', t => {
 });
 
 
-test.only('createReducer', t => {
+test('createReducer', t => {
   t.plan(4);
   const initState = 3;
   const myfn = (val) => val + initState;
@@ -312,23 +388,28 @@ test.only('createReducer', t => {
 });
 
 
-// setupReducers
-// may create reducer with default function name (if exists)
-// may create reducer with specified function name
-// may not create reducer at all
+// setupReducers = (preReducerStreams, actionsBp, options)
+// options.stateSelector, options.functions
+test('setupReducers', t => {
+  const options = {
+    stateSelector: undefined,
+    functions:     functionsExample,
+  };
+  const actionsBp = Object.assign({}, appBlueprintExample.actions);
+  const preReducerStreams = {
+    clientsDataLoading: new Rx.Subject, // just specified reducer: true
+    setFilter:          new Rx.Subject, // own reducer name
+    fetchClients:       new Rx.Subject  // no reducer
+  };
+  const output = helpers.setupReducers(preReducerStreams, actionsBp, options);
+  t.true(isObservable(output.clientsDataLoading));
+  t.true(isObservable(output.setFilter));
+  t.is(output.fetchClients, undefined);
+});
 
 
-// --
-
-
-// ----
-//
 // export const transformStreams = (keyName, obj) => Object.keys(obj)
-// .reduce((acc, key) => {
-//   acc[key] = { [keyName]: obj[key] };
-//   return acc;
-// }, {});
-test.only('transformStreams', t => {
+test('transformStreams', t => {
   const keyName = 'reducers';
   const obj = {
     some:  () => {},

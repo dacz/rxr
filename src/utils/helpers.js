@@ -19,8 +19,10 @@ export const wrapByMonitor = (streamName, obsS, monitorS) => (
   monitorS ? obsS.do((val) => monitorS.next([ streamName, val ])) : obsS
 );
 
-export const makePipedStream = (obsS, fn) => {
-  const rv = fn(obsS);
+export const makePipedStream = (obsS, fn, args = []) => {
+  const params = [ obsS, ...args ];
+  const rv = fn.apply(undefined, params);
+  // const rv = fn.apply(obsS, );
   if (!isObservable(rv)) {
     throw new Error(`blueprint.makePipedStream: function takes Observable
     and has to return observable but it didn't. Returned: ${rv === null ? 'null' : typeof rv}`);
@@ -28,33 +30,48 @@ export const makePipedStream = (obsS, fn) => {
   return rv;
 };
 
-export const getFunc = (fname, functions) => {
-  if (typeof fname !== 'string') {
-    throw new Error(`blueprint.setupActions:
+export const getFunc = (funcInfo, functions) => {
+  if (!Array.isArray(funcInfo) && typeof funcInfo !== 'string') {
+    throw new Error(`blueprint.setupActions or setupReducers:
     pipe/reducer functions in blueprint are identified by name
-    - they have to be string. Received: ${fname === null ? 'null' : typeof fname}
+    - they have to be string or array. Received: ${funcInfo === null ? 'null' : typeof funcInfo}
     Currently you can use only one, co if you need to do some composition,
-    do it elsewhere and put here just the composed one.`);
+    do it elsewhere and put here just the composed one.
+    Calling with: ${funcInfo}`);
   }
+  const [ fname, ...args ] = [].concat(funcInfo);
   if (!functions[fname] || typeof functions[fname] !== 'function') {
-    throw new Error(`blueprint.setupActions: function specified in the blueprint
+    throw new Error(`blueprint.setupActions or setupReducers:
+    function specified in the blueprint
     was not provided within functions param passed to blueprintSetup
-    or it is not a function: ${fname === null ? 'null' : typeof fname}`);
+    or it is not a function: ${funcInfo === null ? 'null' : typeof funcInfo}
+    Calling with: ${funcInfo}`);
   }
-  return functions[fname];
+  return [ functions[fname], args ];
 };
 
-export const setupAction = (appName, streamName, subj, fname, functions, monitorS) => {
+// export streamNameForMonitor = (streamName)
+
+export const setupAction = (appName, streamName, subj, funcInfo, functions, monitorS) => {
   let preReducerS = subj;
-  if (fname) {
-    preReducerS = makePipedStream(preReducerS, getFunc(fname, functions));
+  if (funcInfo) {
+    const [ fn, args ] = getFunc(funcInfo, functions);
+    preReducerS = makePipedStream(preReducerS, fn, args);
   }
-  if (monitorS) preReducerS = wrapByMonitor(`${appName}:${streamName}`, preReducerS, monitorS);
+  if (monitorS) {
+    preReducerS = wrapByMonitor(
+      `${appName}:${streamName}`,
+      preReducerS,
+      monitorS
+    );
+  }
   return preReducerS;
 };
 
 
-export const setupActions = (actions, actionsBp, options) => Object.keys(actionsBp.keys)
+// TODO: actions may require existing streams/funcs as params!
+
+export const setupActions = (actions, actionsBp, options) => Object.keys(actionsBp)
   .reduce((acc, actionName) => {
     const preReducerS = setupAction(
       options.appName,
@@ -64,7 +81,7 @@ export const setupActions = (actions, actionsBp, options) => Object.keys(actions
       options.functions,
       options.monitorS
     );
-    acc[actionName].preReducerS = preReducerS;
+    acc[actionName] = preReducerS;
     return acc;
   }, {});
 
@@ -85,16 +102,17 @@ export const createReducer = (obs, fn) => obs.map(fn);
 
 
 export const setupReducers = (preReducerStreams, actionsBp, options) =>
-  Object.keys(actionsBp.keys)
+  Object.keys(actionsBp)
   .filter(streamName =>
-    actionsBp[streamName].hasOwnProperty('reducer') && !actionsBp[streamName].reducer)
+    actionsBp[streamName].hasOwnProperty('reducer') && actionsBp[streamName].reducer
+  )
   .reduce((acc, streamName) => {
     const reducerFnName = typeof actionsBp[streamName].reducer === 'boolean'
       ? `${streamName}Reducer`
       : actionsBp[streamName].reducer;
     const reducer = createReducer(
       preReducerStreams[streamName],
-      getFunc(reducerFnName, options.functions)
+      getFunc(reducerFnName, options.functions)[0]
     );
     acc[streamName] = scopeReducer(
       [ options.stateSelector, actionsBp[streamName].stateSelector ],
