@@ -25,7 +25,7 @@ const appBlueprintExample = {
     },
 
     fetchClients: {
-      pipe:    [ 'loadClientsAsync', ':clientsDataLoading.func' ],
+      pipe:    [ 'loadClientsAsync', '::clientsDataLoading.func' ],
       reducer: false
     },
   }
