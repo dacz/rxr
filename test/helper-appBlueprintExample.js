@@ -14,20 +14,21 @@ const appBlueprintExample = {
   actions: {
 
     clientsDataLoading: {
-      reducer:       true,
-      stateSelector: [ 'clients' ]
+      // if there is not specified reducer, the name will be 'actionName' + 'Reducer'
+      stateSelector: [ 'clients' ],
+      monitor:       false // this stream will not be monitored
     },
 
     setFilter: {
-      pipe:          'debounceInput',
       reducer:       'setFilterReducerFnName',
       stateSelector: [ 'filter' ]
     },
 
-    fetchClients: {
-      pipe:    [ 'loadClientsAsync', '::clientsDataLoading.func' ],
-      reducer: false
-    },
+    selectClient: {
+      reducer:       (val = '') => () => val,
+      stateSelector: [ 'selectedClient' ]
+    }
+
   }
 };
 

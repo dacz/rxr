@@ -1,5 +1,5 @@
 import Rx from 'rxjs';
-import isObservable from 'is-observable';
+// import isObservable from 'is-observable';
 
 export const initAction = () => {
   const streamS = new Rx.Subject;
@@ -9,82 +9,33 @@ export const initAction = () => {
   };
 };
 
-export const initActions = (actions) => Object.keys(actions)
-  .reduce((acc, actionName) => {
-    acc[actionName] = initAction();
-    return acc;
-  }, {});
-
 export const wrapByMonitor = (streamName, obsS, monitorS) => (
-  monitorS ? obsS.do((val) => monitorS.next([ streamName, val ])) : obsS
+  monitorS ? obsS.do((val) => monitorS.next({ streamName, payload: val })) : obsS
 );
 
-export const makePipedStream = (obsS, fn, args = []) => {
-  const params = [ obsS, ...args ];
-  const rv = fn.apply(undefined, params);
-  // const rv = fn.apply(obsS, );
-  if (!isObservable(rv)) {
-    throw new Error(`blueprint.makePipedStream: function takes Observable
-    and has to return observable but it didn't. Returned: ${rv === null ? 'null' : typeof rv}`);
-  }
-  return rv;
-};
+export const conditionallyWrapByMonitor = (streamName, action, monitorS) => (
+  !action.hasOwnProperty('monitor') || !!action.monitor
+  ? wrapByMonitor(streamName, action.streamS, monitorS)
+  : action.streamS
+);
 
-export const getFunc = (funcInfo, functions) => {
-  if (!Array.isArray(funcInfo) && typeof funcInfo !== 'string') {
-    throw new Error(`blueprint.setupActions or setupReducers:
-    pipe/reducer functions in blueprint are identified by name
-    - they have to be string or array. Received: ${funcInfo === null ? 'null' : typeof funcInfo}
-    Currently you can use only one, co if you need to do some composition,
-    do it elsewhere and put here just the composed one.
-    Calling with: ${funcInfo}`);
+export const streamNameForMonitor = (appName, streamName) => `${appName}:${streamName}`;
+
+export const getFunc = (fname, functions) => {
+  if (typeof fname === 'function') return fname;
+  if (typeof fname !== 'string') {
+    throw new Error(`blueprint.setupReducers in blueprint are identified by name
+    - they have to be string. Received: ${fname === null ? 'null' : typeof fname}
+    Calling with: ${fname}`);
   }
-  const [ fname, ...args ] = [].concat(funcInfo);
   if (!functions[fname] || typeof functions[fname] !== 'function') {
-    throw new Error(`blueprint.setupActions or setupReducers:
-    function specified in the blueprint
-    was not provided within functions param passed to blueprintSetup
-    or it is not a function: ${funcInfo === null ? 'null' : typeof funcInfo}
-    Calling with: ${funcInfo}`);
+    throw new Error(`blueprint.setupReducers in the blueprint
+    was not provided within functions param passed to blueprint
+    or it is not a function: ${fname === null ? 'null' : typeof fname}
+    Calling with: ${fname}`);
   }
-  return [ functions[fname], args ];
+  return functions[fname];
 };
-
-// export streamNameForMonitor = (streamName)
-
-export const setupAction = (appName, streamName, subj, funcInfo, functions, monitorS) => {
-  let preReducerS = subj;
-  if (funcInfo) {
-    const [ fn, args ] = getFunc(funcInfo, functions);
-    preReducerS = makePipedStream(preReducerS, fn, args);
-  }
-  if (monitorS) {
-    preReducerS = wrapByMonitor(
-      `${appName}:${streamName}`,
-      preReducerS,
-      monitorS
-    );
-  }
-  return preReducerS;
-};
-
-
-// TODO: actions may require existing streams/funcs as params!
-
-export const setupActions = (actions, actionsBp, options) => Object.keys(actionsBp)
-  .reduce((acc, actionName) => {
-    const preReducerS = setupAction(
-      options.appName,
-      actionName,
-      actions[actionName].streamS,
-      actionsBp[actionName].pipe,
-      options.functions,
-      options.monitorS
-    );
-    acc[actionName] = preReducerS;
-    return acc;
-  }, {});
-
 
 export const flattenArray = list => list.reduce(
   (a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []
@@ -101,28 +52,44 @@ export const scopeReducer = (scope, reducerS) =>
 export const createReducer = (obs, fn) => obs.map(fn);
 
 
-export const setupReducers = (preReducerStreams, actionsBp, options) =>
-  Object.keys(actionsBp)
-  .filter(streamName =>
-    actionsBp[streamName].hasOwnProperty('reducer') && actionsBp[streamName].reducer
-  )
-  .reduce((acc, streamName) => {
-    const reducerFnName = typeof actionsBp[streamName].reducer === 'boolean'
-      ? `${streamName}Reducer`
-      : actionsBp[streamName].reducer;
-    const reducer = createReducer(
-      preReducerStreams[streamName],
-      getFunc(reducerFnName, options.functions)[0]
-    );
-    acc[streamName] = scopeReducer(
-      [ options.stateSelector, actionsBp[streamName].stateSelector ],
-      reducer
-    );
-    return acc;
-  }, {});
+// export const createActions = (app) => {
+//   Object.keys(app.actions).forEach(actionName => {
+//     // init Subjects
+//     const action = Object.assign(app.actions[actionName], initAction());
+//
+//     // wrap by monitor
+//     const streamName = streamNameForMonitor(app.appName, actionName);
+//     action.streamS = conditionallyWrapByMonitor(streamName, action, app.monitorS);
+//
+//     // create reducerS
+//     const reducerFnName = action.reducer
+//       ? action.reducer
+//       : `${actionName}Reducer`;
+//     action.reducerS = scopeReducer(
+//       [ app.stateSelector, action.stateSelector ],
+//       createReducer( action.streamS, getFunc(reducerFnName, app.functions) )
+//     );
+//   });
+//   return app;
+// };
 
-export const transformStreams = (keyName, obj) => Object.keys(obj)
-  .reduce((acc, key) => {
-    acc[key] = { [keyName]: obj[key] };
+export const createActions = (app) =>
+  Object.keys(app.actions).reduce((acc, actionName) => {
+    // init Subjects
+    const action = Object.assign(app.actions[actionName], initAction());
+
+    // wrap by monitor
+    const streamName = streamNameForMonitor(app.appName, actionName);
+    action.streamS = conditionallyWrapByMonitor(streamName, action, app.monitorS);
+
+    // create reducerS
+    const reducerFnName = action.reducer
+      ? action.reducer
+      : `${actionName}Reducer`;
+    action.reducerS = scopeReducer(
+      [ app.stateSelector, action.stateSelector ],
+      createReducer( action.streamS, getFunc(reducerFnName, app.functions) )
+    );
+    acc[actionName] = action;
     return acc;
   }, {});

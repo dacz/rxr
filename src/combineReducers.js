@@ -14,15 +14,10 @@ import { flattenArray } from './utils/helpers';
  *
  * @param  {Array of Observables} reducers one or many reducers streams (Observables).
  *
- * @param  {Object} options any oteher options passed to combine reducers
- *
  * @return {Observable} Observable that produces functions how to
  * modify state.
  */
-const combineReducers = (reducers, options = {}) => {
-  if (options) {
-    // do nothing for now, prepared for scoped state
-  }
+const combineReducers = (reducers) => {
   const reducerAsArr = [].concat(reducers);
   const flatened = flattenArray(reducerAsArr);
   const reducersArr = [].concat(flatened).filter(item => isObservable(item));

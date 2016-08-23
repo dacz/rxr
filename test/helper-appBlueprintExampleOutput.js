@@ -18,38 +18,33 @@ const appBlueprintExampleOutput = {
   actions: {
 
     clientsDataLoading: {
-      reducer:       true,
       stateSelector: [ 'clients' ],
       func:          '<Function>',
       streamS:       '<Observable>',
-      preReducerS:   '<Observable>',
       reducerS:      '<Observable>'
     },
 
     setFilter: {
-      pipe:          'debounceInput',
       reducer:       'setFilterReducerFnName',
       stateSelector: [ 'filter' ],
       func:          '<Function>',
       streamS:       '<Observable>',
-      preReducerS:   '<Observable>',
       reducerS:      '<Observable>'
     },
 
-    fetchClients: {
-      pipe:        [ 'loadClientsAsync', ':clientsDataLoading.func' ],
-      reducer:     false,
-      func:        '<Function>',
-      streamS:     '<Observable>',
-      preReducerS: '<Observable>',
+    selectClient: {
+      reducer:       '<Function>',
+      stateSelector: [ 'selectedClient' ],
+      func:          '<Function>',
+      streamS:       '<Observable>',
+      reducerS:      '<Observable>'
     }
+
   },
 
   functions: {
     clientsDataLoadingReducer: '<Function>',
-    debounceInput:             '<Function>',
     setFilterReducerFnName:    '<Function>',
-    loadClientsAsync:          '<Function>'
   }
 
 };
