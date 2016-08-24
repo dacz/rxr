@@ -1,4 +1,5 @@
 import Rx from 'rxjs';
+import wrapByMonitor from '../wrapByMonitor';
 // import isObservable from 'is-observable';
 
 export const initAction = () => {
@@ -9,12 +10,11 @@ export const initAction = () => {
   };
 };
 
-export const wrapByMonitor = (streamName, obsS, monitorS) => (
-  monitorS ? obsS.do((val) => monitorS.next({ streamName, payload: val })) : obsS
-);
 
 export const conditionallyWrapByMonitor = (streamName, action, monitorS) => (
-  !action.hasOwnProperty('monitor') || !!action.monitor
+  monitorS
+  && (typeof monitorS.next === 'function')
+  && (!action.hasOwnProperty('monitor') || !!action.monitor)
   ? wrapByMonitor(streamName, action.streamS, monitorS)
   : action.streamS
 );
@@ -52,26 +52,6 @@ export const scopeReducer = (scope, reducerS) =>
 export const createReducer = (obs, fn) => obs.map(fn);
 
 
-// export const createActions = (app) => {
-//   Object.keys(app.actions).forEach(actionName => {
-//     // init Subjects
-//     const action = Object.assign(app.actions[actionName], initAction());
-//
-//     // wrap by monitor
-//     const streamName = streamNameForMonitor(app.appName, actionName);
-//     action.streamS = conditionallyWrapByMonitor(streamName, action, app.monitorS);
-//
-//     // create reducerS
-//     const reducerFnName = action.reducer
-//       ? action.reducer
-//       : `${actionName}Reducer`;
-//     action.reducerS = scopeReducer(
-//       [ app.stateSelector, action.stateSelector ],
-//       createReducer( action.streamS, getFunc(reducerFnName, app.functions) )
-//     );
-//   });
-//   return app;
-// };
 
 export const createActions = (app) =>
   Object.keys(app.actions).reduce((acc, actionName) => {
@@ -80,7 +60,12 @@ export const createActions = (app) =>
 
     // wrap by monitor
     const streamName = streamNameForMonitor(app.appName, actionName);
-    action.streamS = conditionallyWrapByMonitor(streamName, action, app.monitorS);
+    // console.log('------- stramName: ', streamName);
+    // console.log('actions in: ', action.streamS);
+    // const prev = action.streamS;
+    action.preReducerS = conditionallyWrapByMonitor(streamName, action, app.monitorS);
+    // console.log('after: ', action.streamS);
+    // console.log('SAME: ', prev === action.streamS);
 
     // create reducerS
     const reducerFnName = action.reducer
@@ -88,7 +73,7 @@ export const createActions = (app) =>
       : `${actionName}Reducer`;
     action.reducerS = scopeReducer(
       [ app.stateSelector, action.stateSelector ],
-      createReducer( action.streamS, getFunc(reducerFnName, app.functions) )
+      createReducer( action.preReducerS, getFunc(reducerFnName, app.functions) )
     );
     acc[actionName] = action;
     return acc;

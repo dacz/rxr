@@ -1,9 +1,6 @@
 import Rx from 'rxjs';
 import isObservable from 'is-observable';
 import { flattenArray } from './utils/helpers';
-// const flatten = list => list.reduce(
-//     (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
-// );
 
 /**
  * combine multiple reducers (observable streams of functions)

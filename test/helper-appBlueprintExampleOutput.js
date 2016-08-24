@@ -9,7 +9,8 @@ const appBlueprintExampleOutput = {
     filter:         '',
     selectedClient: ''
   },
-  stateS: '<Observable>',
+  preStateS: '<Observable>',
+  stateS:    '<Observable>',
 
   stateSelector: undefined,
 
@@ -21,6 +22,7 @@ const appBlueprintExampleOutput = {
       stateSelector: [ 'clients' ],
       func:          '<Function>',
       streamS:       '<Observable>',
+      preReducerS:   '<Observable>',
       reducerS:      '<Observable>'
     },
 
@@ -29,6 +31,7 @@ const appBlueprintExampleOutput = {
       stateSelector: [ 'filter' ],
       func:          '<Function>',
       streamS:       '<Observable>',
+      preReducerS:   '<Observable>',
       reducerS:      '<Observable>'
     },
 
@@ -37,6 +40,7 @@ const appBlueprintExampleOutput = {
       stateSelector: [ 'selectedClient' ],
       func:          '<Function>',
       streamS:       '<Observable>',
+      preReducerS:   '<Observable>',
       reducerS:      '<Observable>'
     }
 

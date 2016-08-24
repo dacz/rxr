@@ -1,8 +1,10 @@
 import Rx from 'rxjs';
 import combineReducers from './combineReducers';
 import createScopedState from './createScopedState';
+import wrapByMonitor from './wrapByMonitor';
 import {
-  createActions
+  createActions,
+  streamNameForMonitor
 } from './utils/helpers';
 
 const blueprint = (bp, options) => {
@@ -15,7 +17,7 @@ const blueprint = (bp, options) => {
   // create monitor
   if (bp.monitor) app.monitorS = new Rx.Subject;
 
-  // create streams
+  // create actions and streams
   app.actions = createActions(app);
 
   // create reducerS
@@ -28,7 +30,12 @@ const blueprint = (bp, options) => {
   );
 
   // create stateS
-  app.stateS = createScopedState(app.reducerS, app.initialState);
+  app.preStateS = createScopedState(app.reducerS, app.initialState);
+
+  // add state to the monitor (if monitor)
+  app.stateS = bp.monitor
+    ? wrapByMonitor(streamNameForMonitor(app.appName, 'state'), app.preStateS, app.monitorS)
+    : app.preStateS;
 
   // we are done
   return app;

@@ -1,7 +1,6 @@
 import Rx from 'rxjs';
 import isObservable from 'is-observable';
 import test from 'ava';
-import blueprint from '../src/blueprint';
 import * as helpers from '../src/utils/helpers';
 import { subjectHelper, subscribeExpect, pushToSubject } from './helpers';
 import appBlueprintExample from './helper-appBlueprintExample';
@@ -19,30 +18,6 @@ test('initAction', t => {
   subjectHelper(t, action.streamS, want, want);
 });
 
-
-test('wrapByMonitor', t => {
-  t.plan(7);
-  const inVal = [ 1, 33, { some: 'value' } ];
-  const obsS = Rx.Observable.from(inVal);
-  const monitorS = new Rx.Subject;
-  const streamName = 'someStreamName';
-  const want = inVal.map(i => ({ streamName, payload: i }));
-  const wrapped = helpers.wrapByMonitor(streamName, obsS, monitorS);
-  t.false(obsS === wrapped);
-  subscribeExpect(t, monitorS, want);
-  subscribeExpect(t, wrapped, inVal);
-});
-
-test('wrapByMonitor - no monitor', t => {
-  t.plan(4);
-  const inVal = [ 1, 33, { some: 'value' } ];
-  const obsS = Rx.Observable.from(inVal);
-  const monitorS = undefined;
-  const streamName = 'someStreamName';
-  const wrapped = helpers.wrapByMonitor(streamName, obsS, monitorS);
-  t.true(obsS === wrapped);
-  subscribeExpect(t, wrapped, inVal);
-});
 
 test('conditionallyWrapByMonitor', t => {
   t.plan(7);
@@ -236,13 +211,4 @@ test('createActions', t => {
     t.true(isObservable(action.reducerS));
     t.is(typeof action.func, 'function');
   });
-});
-
-
-
-test('blueprint', t => {
-  const app = blueprint(appBlueprintExample, { functions: functionsExample });
-  t.true(isObservable(app.monitorS));
-  t.true(isObservable(app.stateS));
-  t.true(isObservable(app.reducerS));
 });
