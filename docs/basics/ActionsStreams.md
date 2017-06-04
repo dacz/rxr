@@ -1,53 +1,62 @@
-# Actions, Messages and Streams
+# Messages and Streams
 
-## Redux way
+When something happens in our app, we need to process it. Usually this reflects to the state change.
 
-Redux is about passing actions (IMHO - they should be named messages. They are not active, they are just data). Each action/message carries data what happened, like _"user clicked here"_, _"this data arrived"_ etc.
+Redux uses actions - objects passed to store with `dispatch`.
 
-```javascript
-const action = {
-  type: 'user_added',
-  data: 'A'
-}
-```
+For RxR - our RxJS implementation let's think about slightly different concept - streams.
 
-This is typical action in Redux and you can create actionCreator's function that will generate it and then call it like `userAdded('A')`.
+Imagine them as a unix pipes like `cat thisFile.txt | cat | grep "TODO" | wc -l`.
 
-To get messages "at work" we need them to `dispatch` in Redux. `dispatch` means that the message hits the place where it will be processed (reducer/s). `dispatch` is a function of the Store and therefore we somehow need it to be available when we want to `dispatch`.
+The left part [of `| cat |` in our example] waits that we (app) puts in it (it acts as `Observer` of events in our app - user clicks, dragging, router changes, ...). In our example it receives all lines of thisFile.txt. In our example the `cat` does nothing, just passes value further, but I used it to show the analogy with `Subject` in RxJS. `Subject` is `Observable` and `Observer`.
 
+We can connect to this pipe another stream that gets all data. Our pipe on the right side acts as an `Observable` - we can observe (subscribe) to it any other function and process the data. Like the `grep` in our example above filters just the lines with our tasks.
 
-## RxJS / RxR way
+This is the whole concept of RxR implementation of RxJS. We define streams and process them. We don't have to worry about when the event happens. The streams are here and know how to pass and transform our messages through our app.
 
-For our RxJS implementation let's think about slightly different concept - streams.
+Another important thing is that RxR uses the concept of reducers, combineReducers and createState. Actually pretty the same way as Redux so rewriting the Redux app to use RxR and RxJS is straightforward.
 
-Imagine them as a unix pipes like `cat thisFile.txt | grep "TODO" | ...`. Or if you want more javascript-like example, they are little bit like [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
-
-The left ("in") part of the stream/pipe acts as an `Observer`. It observes everything you put in. Observer means that it will get it and may send it further - to the right side.
-
-The right side ("out") part of the stream is `Observable`. That means it sometimes emits the data (when some other Observer will ask for them).
-
-In RxJS are not only these double sided streams like this but in this example are good for two reasons
-
-1) we explained Observer and Observable (and when the stream is both, it is `Subject`)
-2) Redux actions (or actionCreators) modeled in Rx are actually `Subject`s
-
-So let's model our Redux counterpart of actions or actionsCreators as
+Action creators are Subjects:
 
 ```javascript
 const userAddedS = new Rx.Subject;
 ```
 
-_**Note:** We will use the convention that Rx streams when assigned to variables will end with '$'. They don't have to but if you see something like `variableS`, you can guess that it is not usual object but Observable stream._
+_**Note:** I will use the (modified) convention that Rx streams when assigned to variables will end with 'S' (the convention is '$' but I like the S more) They don't have to but if you see something like `variableS`, you can guess that it is not usual object but Observable stream._
 
-We have **no `dispatch`** in RxR. When we need to pass new value to message stream (user clicked or so), we simply call:
+We don't have to use `dispatch` in RxR. When we need to pass new value to message stream (user clicked or so), we simply call:
 
 ```javascript
-userAddedS.next('A');
+userAddedS.next('Ann')
 ```
 
-Now anything that observes the userAddedS stream will get this message. With [`createPushMessageFunctions`](../api/createPushMessageFunctions.md) helper we can add syntactic sugar and create function `userAdded()` that will call `.next` itself so from the component you will call` userAdded('A')` the same way as you can from Redux (if you bind the `dispatch`).
+Now anything that observes the userAddedS stream will get this message. In Redux you can bind the action creator os it will automatically dispatch to store. In RxR you have have automatically available corresponding function. In our previous example we can use:
 
-When you will create your message streams with help of [`createMessageStreams`](../api/createMessageStreams.md), you get both in one object by default.
+```javascript
+userAdded('Ann')
+```
+
+
+## Redux way
+
+In Redux we have action creators, we define usually constants like `USER_ADDED` and then dispatch them to store.
+
+```javascript
+const USER_ADDED = 'USER_ADDED'
+const = (name) => ({
+  type: USER_ADDED,
+  data: 'Ann'
+});
+```
+
+This is typical action in Redux and you can create actionCreator's function that will generate it and then call it like `userAdded('A')`.
+
+To put action creators "at work" we need them to `dispatch` in Redux. `dispatch` means that the message hits the place where it will be processed (in reducer/s). `dispatch` is a function of the Store and therefore we somehow need it to be available when we want to `dispatch`.
+
+
+## RxJS / RxR way
+
+
 
 
 ## Differences to mention

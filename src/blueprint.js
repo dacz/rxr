@@ -1,41 +1,30 @@
-import Rx from 'rxjs';
-import combineReducers from './combineReducers';
-import createScopedState from './createScopedState';
-import wrapByMonitor from './wrapByMonitor';
+// import Rx from 'rxjs';
+import combineStreams from './utils/combineStreams';
+import createState from './utils/createState';
+import createMonitor from './utils/createMonitor';
 import {
-  createActions,
-  streamNameForMonitor
+  createActions
 } from './utils/helpers';
 
-const blueprint = (bp, options) => {
+const blueprint = (bp) => {
   // copy bp to app
-  const app = Object.assign({}, bp, options);
+  const app = Object.assign({}, bp);
 
   // setup app name
   app.appName = bp.appName || 'app';
 
-  // create monitor
-  if (bp.monitor) app.monitorS = new Rx.Subject;
-
-  // create actions and streams
-  app.actions = createActions(app);
+  // create actions, streams and reducers
+  const actionsAndReducers = createActions(app);
+  Object.assign(app, actionsAndReducers);
 
   // create reducerS
-  app.reducerS = combineReducers(
-    Object.keys(app.actions)
-      .reduce((acc, actionName) => {
-        acc.push(app.actions[actionName].reducerS);
-        return acc;
-      }, [])
-  );
+  app.reducerS = combineStreams(Object.keys(actionsAndReducers.reducers));
 
   // create stateS
-  app.preStateS = createScopedState(app.reducerS, app.initialState);
+  app.stateS = createState(app.reducerS, app.initialState);
 
-  // add state to the monitor (if monitor)
-  app.stateS = bp.monitor
-    ? wrapByMonitor(streamNameForMonitor(app.appName, 'state'), app.preStateS, app.monitorS)
-    : app.preStateS;
+  // create monitor
+  if (app.monitor) app.monitorS = createMonitor(app);
 
   // we are done
   return app;

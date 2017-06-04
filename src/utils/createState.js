@@ -1,16 +1,8 @@
 import Rx from 'rxjs';
 import isObservable from 'is-observable';
+import immutable from 'object-path-immutable';
+import objectPath from 'object-path';
 
-/**
- * creates observable application state (stream)
- * You can subsrcibe to this stream and get the current state object
- * and new object every time the state changes.
- *
- * @param   {Observable} reducerS Stream of reducer functions
- * @param   {Observable|Object} initialState Initial state may be Observable
- *          or object (will be converted to Observable)
- * @returns {Observable} Observable stream of current state
- */
 const createState = (reducerS, initialState = Rx.Observable.of({})) => {
   if (!isObservable(reducerS)) {
     throw new Error(`createState expects first argument - reducer - to be Observable
@@ -29,7 +21,14 @@ const createState = (reducerS, initialState = Rx.Observable.of({})) => {
 
   return initialStateS
     .merge(reducerS)
-    .scan((state, reducer) => reducer(state))
+    .scan((state, reducerItem) => {
+      if (Array.isArray(reducerItem)) {
+        const [ scope, reducer ] = reducerItem;
+        // maybe we should use lenses here
+        return immutable.set(state, scope, reducer(objectPath(state, scope)));
+      }
+      return reducerItem(state);
+    })
     .publishReplay(1)
     .refCount();
 };

@@ -2,8 +2,6 @@
 
 * [Read Me](../README.md)
 * [Why and Intro](docs/Introduction.md)
-* [Status](docs/Status.md)
-* [Credits](docs/Credits.md)
 * [Basics](docs/basics/README.md)
   * [Actions and Streams](docs/basics/ActionsStreams.md)
   * [Reducers](docs/basics/Reducers.md)
@@ -27,5 +25,4 @@
   * [messageStreamsMonitorS](docs/api/messageStreamsMonitor.md)
 * [Change Log](/CHANGELOG.md)
 * [Wishlist](docs/Wishlist.md)
-* [Some Resources](docs/Resources.md)
 * [About](docs/About.md)

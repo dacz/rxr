@@ -1,6 +1,0 @@
-@import '../styles/variables.css';
-
-.message {
-  text-align: center;
-  padding: var(--pad);
-}

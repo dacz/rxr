@@ -1,9 +1,0 @@
-@import '../styles/variables.css';
-
-.container {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
