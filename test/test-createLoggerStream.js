@@ -1,15 +1,11 @@
-import test from 'ava';
 import Rx from 'rxjs';
-import isObservable from 'is-observable';
 import createLoggerStream from '../src/createLoggerStream';
-
+import isObservable from 'is-observable';
+import test from 'ava';
 
 test('create with just state', t => {
   t.plan(3);
-  const states = [
-    { some: 'state' },
-    { someOther: 'other state' }
-  ];
+  const states = [{ some: 'state' }, { someOther: 'other state' }];
   const statesCopy = [].concat(states);
   const state$ = Rx.Observable.from(states);
   const loggerStream$ = createLoggerStream(state$);
@@ -21,13 +17,9 @@ test('create with just state', t => {
   });
 });
 
-
 test('create with state and messageStream monitor', t => {
   t.plan(5);
-  const states = [
-    { some: 'state' },
-    { someOther: 'other state' }
-  ];
+  const states = [{ some: 'state' }, { someOther: 'other state' }];
   const streamEvents = [
     { streamName: 'stream1', payload: 'ahoj' },
     { streamName: 'stream2', payload: { some: 'object' } },

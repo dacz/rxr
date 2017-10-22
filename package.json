@@ -80,6 +80,7 @@
     "webpack": "^3.7.1"
   },
   "dependencies": {
+    "deep-equal": "^1.0.1",
     "is-observable": "^0.2.0",
     "rxjs": "^5.0.0-beta.10",
     "rxjs-es": "^5.0.0-beta.10",

@@ -22,25 +22,25 @@ import createPushMessageFunctions from './createPushMessageFunctions';
  *   anotherArrayItem: ...
  * }
  */
-const createMessageStreams = (
-  names,
-  options = {}
-) => {
+const createMessageStreams = (names, options = {}) => {
   const opts = Object.assign({ makePushMessageFunctions: true }, options);
   const namesArr = [].concat(names);
 
   return namesArr.reduce((acc, itemName) => {
     if (typeof itemName === 'string') {
       const streamName = `${itemName}$`;
-      acc[streamName] = new Rx.Subject;
+      acc[streamName] = new Rx.Subject();
       if (opts.makePushMessageFunctions) {
         acc[itemName] = createPushMessageFunctions(acc[streamName]);
       }
-      if (opts.messageStreamsMonitor$ && typeof opts.messageStreamsMonitor$.next === 'function') {
+      if (
+        opts.messageStreamsMonitor$ &&
+        typeof opts.messageStreamsMonitor$.next === 'function'
+      ) {
         acc[streamName] = acc[streamName].do(val => {
           opts.messageStreamsMonitor$.next({
             streamName,
-            payload: val
+            payload: val,
           });
         });
       }

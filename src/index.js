@@ -1,10 +1,10 @@
+import combineReducers from './combineReducers';
+import createLoggerStream from './createLoggerStream';
 import createMessageStreams from './createMessageStreams';
 import createPushMessageFunctions from './createPushMessageFunctions';
-import combineReducers from './combineReducers';
 import createState from './createState';
-import createLoggerStream from './createLoggerStream';
-import startLogging from './startLogging';
 import messageStreamsMonitor$ from './messageStreamsMonitor';
+import startLogging from './startLogging';
 
 export {
   createMessageStreams,
@@ -13,5 +13,5 @@ export {
   createState,
   createLoggerStream,
   startLogging,
-  messageStreamsMonitor$
+  messageStreamsMonitor$,
 };
