@@ -18,14 +18,20 @@ import isObservable from 'is-observable';
  */
 const createLoggerStream = (state$, ...other) => {
   if (!state$ && !isObservable(state$)) {
-    throw new Error('createLoggerStream: you need to pass at least state$ stream.');
+    throw new Error(
+      'createLoggerStream: you need to pass at least state$ stream.'
+    );
   }
   const otherToLog = other.filter(item => isObservable(item));
 
-  const stateToLog$ = state$.map(state => ({ streamName: 'state', payload: state }));
-  const toLog = [ stateToLog$, ...otherToLog ];
+  const stateToLog$ = state$.map(state => ({
+    streamName: 'state',
+    payload: state,
+  }));
+  const toLog = [stateToLog$, ...otherToLog];
 
-  return Rx.Observable.merge(...toLog)
+  return Rx.Observable
+    .merge(...toLog)
     .distinctUntilChanged((a, b) => deepEqual(a, b))
     .publishReplay(1)
     .refCount();

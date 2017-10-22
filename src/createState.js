@@ -14,18 +14,18 @@ import isObservable from 'is-observable';
 const createState = (reducer$, initialState = Rx.Observable.of({})) => {
   if (!isObservable(reducer$)) {
     throw new Error(`createState expects first argument - reducer - to be Observable
-    but it is ${reducer$ === null ? 'null' : typeof reducer$}`
-    );
+    but it is ${reducer$ === null ? 'null' : typeof reducer$}`);
   }
 
   if (!isObservable(initialState) && typeof initialState !== 'object') {
     throw new Error(`createState expects second argument - initialState
       to be Observable or Object
-      but it is ${initialState === null ? 'null' : typeof initialState}`
-    );
+      but it is ${initialState === null ? 'null' : typeof initialState}`);
   }
 
-  const initialState$ = isObservable(initialState) ? initialState : Rx.Observable.of(initialState);
+  const initialState$ = isObservable(initialState)
+    ? initialState
+    : Rx.Observable.of(initialState);
 
   return initialState$
     .merge(reducer$)
