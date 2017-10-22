@@ -1,8 +1,7 @@
-import test from 'ava';
 import Rx from 'rxjs';
-import isObservable from 'is-observable';
 import createMessageStreams from '../src/createMessageStreams';
-
+import isObservable from 'is-observable';
+import test from 'ava';
 
 test('create message stream with single name', t => {
   const name = 'stream1';
@@ -15,12 +14,8 @@ test('create message stream with single name', t => {
   t.true(typeof messageStreams[name] === 'function');
 });
 
-
 test('create message stream with array', t => {
-  const names = [
-    'stream1',
-    'stream2',
-  ];
+  const names = ['stream1', 'stream2'];
   const messageStreams = createMessageStreams(names);
 
   names.forEach(name => {
@@ -32,13 +27,11 @@ test('create message stream with array', t => {
   });
 });
 
-
 test('do not create message stream functions', t => {
-  const names = [
-    'stream1',
-    'stream2',
-  ];
-  const messageStreams = createMessageStreams(names, { makePushMessageFunctions: false });
+  const names = ['stream1', 'stream2'];
+  const messageStreams = createMessageStreams(names, {
+    makePushMessageFunctions: false,
+  });
 
   names.forEach(name => {
     const nameStreamKey = `${name}$`;
@@ -48,26 +41,24 @@ test('do not create message stream functions', t => {
   });
 });
 
-
 test('create message stream with logger functions', t => {
   t.plan(10);
 
   const wantVals = [
     { streamName: 'stream1', payload: 'ahoj' },
-    { streamName: 'stream2', payload: [ 1, 2, 3 ] },
+    { streamName: 'stream2', payload: [1, 2, 3] },
     { streamName: 'stream1', payload: 42 },
-    { streamName: 'stream2', payload: { some: 'Object' } }
+    { streamName: 'stream2', payload: { some: 'Object' } },
   ];
   const wantValsCopy = [].concat(wantVals);
 
   // const monitorStream$ = new Rx.Subject;
   const messageStreamsMonitor$ = Rx.Observable.from(wantVals);
 
-  const names = [
-    'stream1',
-    'stream2',
-  ];
-  const messageStreams = createMessageStreams(names, { messageStreamsMonitor$ });
+  const names = ['stream1', 'stream2'];
+  const messageStreams = createMessageStreams(names, {
+    messageStreamsMonitor$,
+  });
 
   names.forEach(name => {
     const nameStreamKey = `${name}$`;

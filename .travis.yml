@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-  - "5"
   - "6"
+  - "8"
 script:
   - npm run check:src
   - npm run build
 branches:
   only:
     - master
+    - /^greenkeeper/.*$/

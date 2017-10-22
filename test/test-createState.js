@@ -1,10 +1,12 @@
-import test from 'ava';
 import Rx from 'rxjs';
 import createState from '../src/createState';
-
+import test from 'ava';
 
 test('creates state', t => {
-  const reducer = state => ({ ...state, reducerCalled: (state.reducerCalled || 0) + 1 });
+  const reducer = state => ({
+    ...state,
+    reducerCalled: (state.reducerCalled || 0) + 1,
+  });
   const reducer$ = new Rx.Subject();
   const state$ = createState(reducer$);
   const valWanted = [
@@ -22,10 +24,12 @@ test('creates state', t => {
   reducer$.next(reducer);
 });
 
-
 test('creates state with initial state', t => {
   const initialState$ = Rx.Observable.of({ reducerCalled: 10 });
-  const reducer = state => ({ ...state, reducerCalled: (state.reducerCalled || 0) + 1 });
+  const reducer = state => ({
+    ...state,
+    reducerCalled: (state.reducerCalled || 0) + 1,
+  });
   const reducer$ = new Rx.Subject();
   const state$ = createState(reducer$, initialState$);
   const valWanted = [
@@ -45,7 +49,10 @@ test('creates state with initial state', t => {
 
 test('creates state with initial state passed as an object', t => {
   const initialState = { reducerCalled: 10 };
-  const reducer = state => ({ ...state, reducerCalled: (state.reducerCalled || 0) + 1 });
+  const reducer = state => ({
+    ...state,
+    reducerCalled: (state.reducerCalled || 0) + 1,
+  });
   const reducer$ = new Rx.Subject();
   const state$ = createState(reducer$, initialState);
   const valWanted = [
@@ -62,7 +69,6 @@ test('creates state with initial state passed as an object', t => {
   reducer$.next(reducer);
   reducer$.next(reducer);
 });
-
 
 test('throws when not proper reducer', t => {
   t.throws(() => createState({}));

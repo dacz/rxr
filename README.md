@@ -4,6 +4,8 @@
 
 # RxR - RxJS the Redux way
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dacz/rxr.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/dacz/rxr.svg?branch=master)](https://travis-ci.org/dacz/rxr)
 [![npm](https://img.shields.io/npm/v/rxr.svg?maxAge=2592000)](https://www.npmjs.com/package/rxr)
 
