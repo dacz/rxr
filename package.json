@@ -71,7 +71,7 @@
     "check-es3-syntax-cli": "^0.2.1",
     "cross-env": "^5.0.5",
     "eslint": "^4.9.0",
-    "eslint-config-dacz": "^0.13.3",
+    "eslint-config-dacz": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
