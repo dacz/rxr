@@ -1,3 +1,5 @@
+# NOT MAINTAINED ANY MORE
+
 [![RxR - RxJS the Redux way](https://raw.githubusercontent.com/dacz/rxr/master/logo/rxr-logo-color-100x52.png)][e76967bf]
 
   [e76967bf]: https://dacz.github.io/rxr/ "RxR - RxJS the Redux way"
